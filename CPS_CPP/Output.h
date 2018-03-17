@@ -40,7 +40,7 @@ template<class T>
 std::ostream& operator<<(std::ostream& os, const Output<T>& dt)
 {
 	//X
-	os << "x: [";
+	os << "\"x\": [";
 	os << dt.GetX()[0];
 	for (size_t i = 0; i < dt.GetX().size(); ++i)
 	{
@@ -49,7 +49,7 @@ std::ostream& operator<<(std::ostream& os, const Output<T>& dt)
 	os << "],\n";
 
 	//Y
-	os << "y: [";
+	os << "\"y\": [";
 	os << dt.GetY()[0];
 	for (size_t i = 0; i < dt.GetY().size(); ++i)
 	{
