@@ -42,9 +42,18 @@ struct RealNumber : public INumber
 	{
 		return new RealNumber(Value * rValue->GetValues()[0]);
 	}
+	INumber* Multiply(double aValue) const override
+	{
+		return new RealNumber(Value * aValue);
+	}
 	INumber& MultiplyHere(const INumber* rValue) override
 	{
 		Value *= rValue->GetValues()[0];
+		return *this;
+	}
+	INumber& MultiplyHere(double aValue) override
+	{
+		Value *= aValue;
 		return *this;
 	}
 
@@ -52,9 +61,18 @@ struct RealNumber : public INumber
 	{
 		return new RealNumber(Value / rValue->GetValues()[0]);
 	}
+	INumber* Divide(double aValue) const override
+	{
+		return new RealNumber(Value / aValue);
+	}
 	INumber& DivideHere(const INumber* rValue) override
 	{
 		Value /= rValue->GetValues()[0];
+		return *this;
+	}
+	INumber& DivideHere(double aValue) override
+	{
+		Value /= aValue;
 		return *this;
 	}
 

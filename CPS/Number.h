@@ -56,9 +56,18 @@ public:
 		return *this;
 	}
 
+	Number operator*(double aValue) const
+	{
+		return Number(numberPimpl->Multiply(aValue));
+	}
 	Number operator*(const Number& aNumber) const
 	{
 		return Number(numberPimpl->Multiply(aNumber.numberPimpl.get()));
+	}
+	Number& operator*=(double aValue)
+	{
+		numberPimpl->MultiplyHere(aValue);
+		return *this;
 	}
 	Number& operator*=(const Number& aNumber)
 	{
@@ -66,9 +75,19 @@ public:
 		return *this;
 	}
 
+	
+	Number operator/(double aValue) const
+	{
+		return Number(numberPimpl->Divide(aValue));
+	}
 	Number operator/(const Number& aNumber) const
 	{
 		return Number(numberPimpl->Divide(aNumber.numberPimpl.get()));
+	}
+	Number& operator/=(double aValue)
+	{
+		numberPimpl->DivideHere(aValue);
+		return *this;
 	}
 	Number& operator/=(const Number& aNumber)
 	{

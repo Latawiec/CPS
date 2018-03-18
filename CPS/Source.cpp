@@ -6,9 +6,17 @@
 
 #include "Complex.h"
 #include "Number.h"
+#include "Linear.h"
 #include "Sum.h"
 #include "Sampler.h"
 #include "Sinus.h"
+#include "SinusFlat.h"
+#include "SinusPositive.h"
+#include "Square.h"
+#include "Triangle.h"
+#include "Step.h"
+#include "RandNormal.h"
+#include "RandUniform.h"
 
 using namespace std;
 using namespace Numeric;
@@ -46,11 +54,19 @@ int main()
 {
 	Sum sumOP{};
 	Sin sinOp(Sampler(0, 0.1, 10));
+	SinFlat sinFlat(Sampler(0, 0.1, 10));
+	SinPositive sinPositive(Sampler(0, 0.1, 10));
+	Linear line(Sampler(0, 0.1, 10), 0.0, 5.0);
+	Square square(Sampler(0, 0.01, 10), 0.4, 3);
+	Triangle triangle(Sampler(0, 0.01, 10), 0.4, 3);
+	Step step(Sampler(0, 0.01, 10), 5);
+	RandUniform rUniform(Sampler(0, 0.01, 10), 5);
+	RandNormal rNormal(Sampler(0, 0.01, 10));
 
 	auto XD = sumOP.AddInput(sinOp.Get())
-				   .AddInput(sinOp.Get()).Execute().GetOutput();
+				   .AddInput(sinPositive.Get()).Execute().GetOutput();
 
-	PutToFile(XD);
+	PutToFile(rUniform.Get());
 
 	Number comp(1, 2);
 	Number comp1(3, 3);

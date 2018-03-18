@@ -115,14 +115,22 @@
     <ClInclude Include="Containers.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="INumber.h" />
+    <ClInclude Include="Linear.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Operation.h" />
     <ClInclude Include="OperationOwner.h" />
+    <ClInclude Include="RandNormal.h" />
+    <ClInclude Include="RandUniform.h" />
     <ClInclude Include="Real.h" />
     <ClInclude Include="Sampler.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="Sinus.h" />
+    <ClInclude Include="SinusFlat.h" />
+    <ClInclude Include="SinusPositive.h" />
+    <ClInclude Include="Square.h" />
+    <ClInclude Include="Step.h" />
     <ClInclude Include="Sum.h" />
+    <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
