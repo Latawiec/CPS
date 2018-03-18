@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Containers.h"
+#include "IOutput.h"
 #include "Sampler.h"
 
-class Generator
+class Generator : public IOutput
 {
 public:
 	Generator(const Sampler& aSampler)
@@ -13,13 +14,19 @@ public:
 
 	virtual ~Generator() = default;
 
-	const Base::Data& Get()
+	const Base::Data& GetOutput() const override
 	{
-		if (!generated)
-		{
-			Initialize();
-		}
 		return data;
+	}
+
+	Generator& Generate()
+	{
+		data.Push(Base::Array(data[0].Size()));
+		for (unsigned int i = 0; i < data[0].Size(); ++i)
+		{
+			data[1].Push(GeneratorFunction(data[0][i]));
+		}
+		return *this;
 	}
 
 protected:
@@ -27,16 +34,5 @@ protected:
 
 
 private:
-	void Initialize()
-	{
-		data.Push(Base::Array(data[0].Size()));
-		for (unsigned int i = 0; i < data[0].Size(); ++i)
-		{
-			data[1].Push(GeneratorFunction(data[0][i]));
-		}
-		generated = true;
-	}
-
-	bool		   generated = false;
 	Base::Data	   data;
 };

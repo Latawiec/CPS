@@ -8,12 +8,12 @@ namespace Base{
 struct OperationOwner : public IOperation
 {
 public:
-	IOperation& AddInput(const Data& aData) override
+	IOperation& AddInput(const IOutput& aData) override
 	{
 		dataSource.push_back(&aData);
 		return *this;
 	}
-	IOperation& RemoveInput(const Data& aData) override
+	IOperation& RemoveInput(const IOutput& aData) override
 	{
 		dataSource.erase( std::remove(dataSource.begin(), dataSource.end(), &aData), dataSource.end() );
 		return *this;
@@ -28,13 +28,14 @@ public:
 	const Data& GetOutput() const override
 	{
 		return output;
+
 	}
 
-	virtual Data OperationDefinition(std::vector<const Data*> aData) = 0;
+	virtual Data OperationDefinition(std::vector<const IOutput*> aData) = 0;
 
 private:
-	std::vector<const Data*> dataSource;
-	Data					 output;
+	std::vector<const IOutput*> dataSource;
+	Data						output;
 };
 
 }

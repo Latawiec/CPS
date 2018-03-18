@@ -116,6 +116,7 @@
     <ClInclude Include="Divide.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="INumber.h" />
+    <ClInclude Include="IOutput.h" />
     <ClInclude Include="Linear.h" />
     <ClInclude Include="Multiply.h" />
     <ClInclude Include="Number.h" />

@@ -96,6 +96,9 @@
     <ClInclude Include="Divide.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
+    <ClInclude Include="IOutput.h">
+      <Filter>Header Files\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
