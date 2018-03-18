@@ -65,27 +65,41 @@ void PutToFile(const Base::Data& aOutput)
 int main()
 {
 	Sum				sumOP{};
+	Sum				sumOP1{};
 	Divide			divOP{};
 	Multiply		mulOP{};
+	Multiply		mulOP1{};
 	Subtract		subOP{};
 
-	Sin				sinOp(Sampler(0, 0.1, 10));
-	SinFlat			sinFlat(Sampler(0, 0.1, 10));
-	SinPositive		sinPositive(Sampler(0, 0.1, 10));
-	Linear			line(Sampler(0, 0.1, 10), 0.0, -1.0);
-	Square			square(Sampler(0, 0.01, 10), 0.4, 3);
-	Triangle		triangle(Sampler(0, 0.01, 10), 0.4, 3);
-	Step			step(Sampler(0, 0.01, 10), 5);
-	RandUniform		rUniform(Sampler(0, 0.01, 10), 5);
-	RandNormal		rNormal(Sampler(0, 0.01, 10));
+	Sampler a(0, 0.01, 9);
 
-	sumOP.AddInput(sinFlat.Get()).AddInput(sinPositive.Get()).Execute();
+	Sin				sinOp(a);
+	SinFlat			sinFlat(a);
+	SinPositive		sinPositive(a);
+	Linear			line(a, 0.0, 5.0);
+	Linear			minus(a, 0.0, -1.0);
+	Square			square(a, 0.4, 3);
+	Triangle		triangle(a, 0.4, 3);
+	Step			step(a, 5);
+	RandUniform		rUniform(a, 5);
+	RandNormal		rNormal(a);
 
-	PutToFile(sumOP.GetOutput());
+	mulOP1.AddInput(sinOp.Get()).AddInput(minus.Get()).Execute();
 
-	mulOP.AddInput(sumOP.GetOutput()).AddInput(line.Get()).Execute();
+	sumOP.AddInput(sinFlat.Get())
+		 .AddInput(mulOP1.GetOutput()).Execute();
+	
 
-	PutToFile(mulOP.GetOutput());
+	mulOP.AddInput(sumOP.GetOutput())
+		 .AddInput(line.Get()).Execute();
+
+	sumOP1.AddInput(mulOP.GetOutput())
+		  .AddInput(sinFlat.Get()).Execute();
+
+	PutToFile(sumOP1.GetOutput());
+
+
+
 
 	Number comp(1, 2);
 	Number comp1(3, 3);
