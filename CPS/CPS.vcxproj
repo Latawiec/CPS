@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{A2BFBECB-4228-494F-94AF-E3C4A6AFF3E2}</ProjectGuid>
-    <RootNamespace>CPS_CPP</RootNamespace>
+    <ProjectGuid>{6C96131C-3BD7-4E18-B4D0-4AF714A23D4B}</ProjectGuid>
+    <RootNamespace>CPS</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -111,28 +111,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClInclude Include="Complex.h" />
+    <ClInclude Include="Containers.h" />
+    <ClInclude Include="Generator.h" />
+    <ClInclude Include="INumber.h" />
+    <ClInclude Include="Number.h" />
+    <ClInclude Include="Operation.h" />
+    <ClInclude Include="OperationOwner.h" />
+    <ClInclude Include="Real.h" />
+    <ClInclude Include="Sampler.h" />
+    <ClInclude Include="Serializable.h" />
+    <ClInclude Include="Sinus.h" />
+    <ClInclude Include="Sum.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Linear.h" />
-    <ClInclude Include="Complex.h" />
-    <ClInclude Include="Divide.h" />
-    <ClInclude Include="Generator.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Multiply.h" />
-    <ClInclude Include="Operation.h" />
-    <ClInclude Include="Output.h" />
-    <ClInclude Include="Rand_NormalDistribution.h" />
-    <ClInclude Include="Rand_UniformDistribution.h" />
-    <ClInclude Include="Sampler.h" />
-    <ClInclude Include="SinusDoubleFlat.h" />
-    <ClInclude Include="SinusFlat.h" />
-    <ClInclude Include="Sinus.h" />
-    <ClInclude Include="Square.h" />
-    <ClInclude Include="Step.h" />
-    <ClInclude Include="Subtract.h" />
-    <ClInclude Include="Sum.h" />
-    <ClInclude Include="Triangle.h" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
