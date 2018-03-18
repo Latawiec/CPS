@@ -113,9 +113,11 @@
   <ItemGroup>
     <ClInclude Include="Complex.h" />
     <ClInclude Include="Containers.h" />
+    <ClInclude Include="Divide.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="INumber.h" />
     <ClInclude Include="Linear.h" />
+    <ClInclude Include="Multiply.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Operation.h" />
     <ClInclude Include="OperationOwner.h" />
@@ -129,6 +131,7 @@
     <ClInclude Include="SinusPositive.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Step.h" />
+    <ClInclude Include="Subtract.h" />
     <ClInclude Include="Sum.h" />
     <ClInclude Include="Triangle.h" />
   </ItemGroup>

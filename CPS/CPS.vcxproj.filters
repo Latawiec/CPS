@@ -87,6 +87,15 @@
     <ClInclude Include="RandNormal.h">
       <Filter>Header Files\Generators</Filter>
     </ClInclude>
+    <ClInclude Include="Subtract.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Multiply.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Divide.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
