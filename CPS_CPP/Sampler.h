@@ -1,36 +1,40 @@
 #pragma once
 
+#include <vector>
+
 namespace Base {
 
 struct Sampler
 {
-	Sampler(double offset, double frequency)
+	Sampler(double offset, double frequency, int count)
 		:
 		iOffset(offset),
 		iCurrent(offset),
-		iFrequency(frequency)
+		iFrequency(frequency),
+		iCount(count)
 	{}
 
-	void Reset()
+	const std::vector<double>& Generate()
 	{
-		iCurrent = iOffset;
-	}
-
-	double Next()
-	{
-		iCurrent += iFrequency;
-		return iCurrent;
-	}
-
-	double Current()
-	{
-		return iCurrent;
+		if (!iCalculated)
+		{
+			iResult.reserve(iCount);
+			for (int i = 0; i < iCount; ++i)
+			{
+				iResult.push_back(iOffset + i*iFrequency);
+			}
+			iCalculated = true;
+		}
+		return iResult;
 	}
 
 private:
 	double					 iOffset;
 	double					 iFrequency;
+	int						 iCount = 0;
 	double					 iCurrent = 0;
+	bool					 iCalculated = false;
+	std::vector<double>		 iResult;
 };
 
 }

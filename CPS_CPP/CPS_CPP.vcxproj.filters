@@ -44,9 +44,6 @@
     <ClInclude Include="Generator.h">
       <Filter>Header Files\Base</Filter>
     </ClInclude>
-    <ClInclude Include="BasicGenerator.h">
-      <Filter>Header Files\Generators</Filter>
-    </ClInclude>
     <ClInclude Include="Sum.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
@@ -57,7 +54,37 @@
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
     <ClInclude Include="Sinus.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Rand_NormalDistribution.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Rand_UniformDistribution.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="SinusFlat.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="SinusDoubleFlat.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Square.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Step.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Divide.h">
       <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Subtract.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Linear.h">
+      <Filter>Header Files\Generators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

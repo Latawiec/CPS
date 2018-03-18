@@ -1,13 +1,13 @@
-﻿#pragma once
+#pragma once
 
 #include "Generator.h"
 #include "Sampler.h"
 #include "assert.h"
 #include <math.h>
 
-struct Sin : public Base::Generator<double>
+struct SinFlat : public Base::Generator<double>
 {
-	Sin(Base::Sampler aSampler, double aAmplitude = 1.0)
+	SinFlat(Base::Sampler aSampler, double aAmplitude = 1.0)
 		:
 		iAmplitude(aAmplitude),
 		Generator(aSampler)
@@ -22,7 +22,15 @@ struct Sin : public Base::Generator<double>
 
 		for (const auto& value : x)
 		{
-			y.push_back(std::sin(value));
+			double sinVal = std::sin(value);
+			if (sinVal > 0)
+			{
+				y.push_back(iAmplitude*sinVal);
+			}
+			else
+			{
+				y.push_back(0.0);
+			}
 		}
 
 		return Base::Output<double>(x, y);

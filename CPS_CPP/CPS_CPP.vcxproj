@@ -114,16 +114,25 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasicGenerator.h" />
+    <ClInclude Include="Linear.h" />
     <ClInclude Include="Complex.h" />
+    <ClInclude Include="Divide.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Multiply.h" />
     <ClInclude Include="Operation.h" />
     <ClInclude Include="Output.h" />
+    <ClInclude Include="Rand_NormalDistribution.h" />
+    <ClInclude Include="Rand_UniformDistribution.h" />
     <ClInclude Include="Sampler.h" />
+    <ClInclude Include="SinusDoubleFlat.h" />
+    <ClInclude Include="SinusFlat.h" />
     <ClInclude Include="Sinus.h" />
+    <ClInclude Include="Square.h" />
+    <ClInclude Include="Step.h" />
+    <ClInclude Include="Subtract.h" />
     <ClInclude Include="Sum.h" />
+    <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

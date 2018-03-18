@@ -6,7 +6,7 @@
 #include <math.h>
 
 template<class T>
-struct Multiply : public Base::Operation<T>
+struct Subtract : public Base::Operation<T>
 {
 	Base::Output<T> OperationDefinition(const std::vector<const Base::Output<T>*>& aInputData)
 	{
@@ -21,7 +21,7 @@ struct Multiply : public Base::Operation<T>
 		{
 			for (size_t j = 0; j < aInputData[i]->GetY().size(); ++j)
 			{
-				y[j] *= aInputData[i]->GetY()[j];
+				y[j] -= aInputData[i]->GetY()[j];
 			}
 		}
 
