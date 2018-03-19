@@ -85,15 +85,34 @@ int main()
 	RandNormal		rNormal(a);
 
 	sinOp.Generate();
+	PutToFile(sinOp.GetOutput());
+
 	sinFlat.Generate();
+	PutToFile(sinFlat.GetOutput());
+
 	sinPositive.Generate();
+	PutToFile(sinPositive.GetOutput());
+
 	line.Generate();
+	PutToFile(line.GetOutput());
+
 	minus.Generate();
+	PutToFile(minus.GetOutput());
+
 	square.Generate();
+	PutToFile(square.GetOutput());
+
 	triangle.Generate();
+	PutToFile(triangle.GetOutput());
+
 	step.Generate();
+	PutToFile(step.GetOutput());
+
 	rUniform.Generate();
+	PutToFile(rUniform.GetOutput());
+
 	rNormal.Generate();
+	PutToFile(rNormal.GetOutput());
 
 	mulOP1.AddInput(sinOp).AddInput(minus).Execute();
 

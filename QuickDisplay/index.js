@@ -2,13 +2,18 @@ var fileChoose = document.getElementById('myFile');
 var graphDiv = document.getElementById('PLOT');
 
 fileChoose.addEventListener("change", function () {
+    var files = fileChoose.files;
     var reader = new FileReader();
-
-    reader.onload = function(){
-      var data = reader.result;
-      DrawPlot(JSON.parse(data));
+    var counter = 0;
+    reader.onloadend = function(){
+      counter++;
+      DrawPlot(JSON.parse(reader.result));
+      if(counter < files.length)
+      {
+        reader.readAsText(files[counter]);
+      }
     };
-    reader.readAsText(fileChoose.files[0]);
+    reader.readAsText(files[0]);
   });
 
 Plotly.newPlot(graphDiv, []);
