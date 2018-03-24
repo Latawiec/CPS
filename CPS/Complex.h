@@ -1,6 +1,7 @@
 #pragma once
 
 #include "INumber.h"
+#include "Real.h"
 
 namespace Numeric {
 
@@ -97,6 +98,11 @@ struct ComplexNumber : public INumber
 	Type GetType() const override
 	{
 		return Type::Complex;
+	}
+
+	virtual INumber* Mod() const override
+	{
+		return new RealNumber(std::sqrt(Re*Re + Im*Im));
 	}
 
 	const double* GetValues() const override

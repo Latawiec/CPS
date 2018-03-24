@@ -12,6 +12,8 @@ public:
 		data.Push(aSampler.Get());
 	}
 
+	Generator() = default;
+
 	virtual ~Generator() = default;
 
 	const Base::Data& GetOutput() const override
@@ -19,7 +21,7 @@ public:
 		return data;
 	}
 
-	Generator& Generate()
+	virtual Generator& Generate()
 	{
 		data.Push(Base::Array(data[0].Size()));
 		for (unsigned int i = 0; i < data[0].Size(); ++i)
@@ -32,6 +34,5 @@ public:
 protected:
 	virtual Numeric::Number GeneratorFunction(const Numeric::Number& aArg) = 0;
 
-private:
 	Base::Data	   data;
 };

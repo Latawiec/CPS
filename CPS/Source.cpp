@@ -7,6 +7,11 @@
 #include "Complex.h"
 #include "Number.h"
 
+#include "Average.h"
+#include "AverageMod.h"
+#include "Power.h"
+#include "RMS.h"
+#include "Variance.h"
 #include "Sum.h"
 #include "Divide.h"
 #include "Multiply.h"
@@ -25,11 +30,12 @@
 #include "RandUniform.h"
 #include "Impulse.h"
 #include "ImpulseNoise.h"
+#include "FromFile.h"
 
 using namespace std;
 using namespace Numeric;
 
-void PutToFile(const Base::Data& aOutput)
+void PutToFile(const Base::Data& aOutput, const std::string& aName = "")
 {
 	auto now = std::chrono::system_clock::now();
 	auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -42,7 +48,14 @@ void PutToFile(const Base::Data& aOutput)
 	ss << "../QuickDisplay/data/";
 	ss << "data_";
 	ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d_%OH-%OM-%OS");
-	ss << "_" << value;
+	if (aName.empty())
+	{
+		ss << "_" << value;
+	}
+	else
+	{
+		ss << '_' << aName;
+	}
 	ss << ".json";
 
 	fstream file;
@@ -72,10 +85,16 @@ int main()
 	Multiply		mulOP{};
 	Multiply		mulOP1{};
 	Subtract		subOP{};
+	FromFile		fileRead("../QuickDisplay/data/dupa.json");
+	Average			avg{};
+	AverageMod		avgMod{};
+	Power			pwr{};
+	Variance		variance{};
+	RMS				rms{};
 
 	Sampler a(0, 0.01, 9);
 
-	Sin				sinOp(a, 2.0);
+	Sin				sinOp(a, 1.0);
 	SinFlat			sinFlat(a, 2.0);
 	SinPositive		sinPositive(a, 2.0);
 	Linear			line(a, 0.0, 5.0);
@@ -88,8 +107,10 @@ int main()
 	Impulse			impulse(a, 12);
 	ImpulseNoise    impulseNoise(a, 0.1);
 
-	//sinOp.Generate();
-	//PutToFile(sinOp.GetOutput());
+	//fileRead.Generate();
+
+	sinOp.Generate();
+	PutToFile(sinOp.GetOutput(), "SIN");
 
 	//sinFlat.Generate();
 	//PutToFile(sinFlat.GetOutput());
@@ -116,13 +137,28 @@ int main()
 	PutToFile(rUniform.GetOutput());
 
 	rNormal.Generate();
-	PutToFile(rNormal.GetOutput());*/
+	PutToFile(rNormal.GetOutput());
 
 	impulse.Generate();
 	PutToFile(impulse.GetOutput());
 
 	impulseNoise.Generate();
-	PutToFile(impulseNoise.GetOutput());
+	PutToFile(impulseNoise.GetOutput());*/
+
+	avg.AddInput(sinOp).Execute();
+	PutToFile(avg.GetOutput(), "AVG");
+
+	avgMod.AddInput(sinOp).Execute();
+	PutToFile(avgMod.GetOutput(), "AVGMOD");
+
+	variance.AddInput(sinOp).Execute();
+	PutToFile(variance.GetOutput(), "VARIANCE");
+
+	rms.AddInput(sinOp).Execute();
+	PutToFile(rms.GetOutput(), "RMS");
+
+	pwr.AddInput(sinOp).Execute();
+	PutToFile(pwr.GetOutput(), "POWER");
 
 	/*mulOP1.AddInput(sinOp).AddInput(minus).Execute();
 

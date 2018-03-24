@@ -86,6 +86,11 @@ struct RealNumber : public INumber
 		return Type::Real;
 	}
 
+	virtual INumber* Mod() const override
+	{
+		return new RealNumber(std::sqrt(Value*Value));
+	}
+
 	const double* GetValues() const override
 	{
 		return &Value;

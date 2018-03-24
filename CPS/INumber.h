@@ -33,6 +33,8 @@ struct INumber
 
 	virtual bool Compare(const INumber* rValue) const = 0;
 
+	virtual INumber* Mod() const = 0;
+
 	virtual Type GetType() const = 0;
 
 	virtual const double* GetValues() const = 0;

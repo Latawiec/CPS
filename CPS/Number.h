@@ -95,6 +95,11 @@ public:
 		return *this;
 	}
 
+	Number Mod() const
+	{
+		return Number(numberPimpl->Mod());
+	}
+
 	INumber::Type Type() const
 	{
 		return numberPimpl->GetType();

@@ -105,14 +105,29 @@
     <ClInclude Include="Factory.h">
       <Filter>Header Files\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Impulse.h">
       <Filter>Header Files\Generators</Filter>
     </ClInclude>
     <ClInclude Include="ImpulseNoise.h">
       <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="FromFile.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Average.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="RMS.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="AverageMod.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Power.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Variance.h">
+      <Filter>Header Files\Operations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
