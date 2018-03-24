@@ -123,6 +123,7 @@
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FromFile.h" />
     <ClInclude Include="Generator.h" />
+    <ClInclude Include="Histogram.h" />
     <ClInclude Include="Impulse.h" />
     <ClInclude Include="ImpulseNoise.h" />
     <ClInclude Include="INumber.h" />

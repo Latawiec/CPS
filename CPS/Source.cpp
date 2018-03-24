@@ -30,6 +30,7 @@
 #include "RandUniform.h"
 #include "Impulse.h"
 #include "ImpulseNoise.h"
+#include "Histogram.h"
 #include "FromFile.h"
 
 using namespace std;
@@ -91,6 +92,7 @@ int main()
 	Power			pwr{};
 	Variance		variance{};
 	RMS				rms{};
+	Histogram		histogram{};
 
 	Sampler a(0, 0.01, 9);
 
@@ -159,6 +161,9 @@ int main()
 
 	pwr.AddInput(sinOp).Execute();
 	PutToFile(pwr.GetOutput(), "POWER");
+
+	histogram.AddInput(sinOp).Execute();
+	PutToFile(histogram.GetOutput(), "HISTOGRAM");
 
 	/*mulOP1.AddInput(sinOp).AddInput(minus).Execute();
 

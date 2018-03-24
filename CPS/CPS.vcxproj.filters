@@ -129,6 +129,9 @@
     <ClInclude Include="Variance.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
+    <ClInclude Include="Histogram.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
