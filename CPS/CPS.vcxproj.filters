@@ -25,6 +25,9 @@
     <Filter Include="Header Files\Generators">
       <UniqueIdentifier>{770dc5a4-dd84-43db-a7b2-0922af7bcc47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Interface">
+      <UniqueIdentifier>{053ae07f-abf8-436f-8898-d18cb4043bbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Real.h">
@@ -98,6 +101,18 @@
     </ClInclude>
     <ClInclude Include="IOutput.h">
       <Filter>Header Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Impulse.h">
+      <Filter>Header Files\Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpulseNoise.h">
+      <Filter>Header Files\Generators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

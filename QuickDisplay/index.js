@@ -22,5 +22,3 @@ function DrawPlot(data){
     Plotly.addTraces(graphDiv, data);
 }
 
-
-

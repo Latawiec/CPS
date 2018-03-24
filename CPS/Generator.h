@@ -32,7 +32,6 @@ public:
 protected:
 	virtual Numeric::Number GeneratorFunction(const Numeric::Number& aArg) = 0;
 
-
 private:
 	Base::Data	   data;
 };

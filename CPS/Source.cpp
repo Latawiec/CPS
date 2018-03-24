@@ -23,6 +23,8 @@
 #include "Step.h"
 #include "RandNormal.h"
 #include "RandUniform.h"
+#include "Impulse.h"
+#include "ImpulseNoise.h"
 
 using namespace std;
 using namespace Numeric;
@@ -73,9 +75,9 @@ int main()
 
 	Sampler a(0, 0.01, 9);
 
-	Sin				sinOp(a);
-	SinFlat			sinFlat(a);
-	SinPositive		sinPositive(a);
+	Sin				sinOp(a, 2.0);
+	SinFlat			sinFlat(a, 2.0);
+	SinPositive		sinPositive(a, 2.0);
 	Linear			line(a, 0.0, 5.0);
 	Linear			minus(a, 0.0, -1.0);
 	Square			square(a, 0.4, 3);
@@ -83,17 +85,19 @@ int main()
 	Step			step(a, 5);
 	RandUniform		rUniform(a, 5);
 	RandNormal		rNormal(a);
+	Impulse			impulse(a, 12);
+	ImpulseNoise    impulseNoise(a, 0.1);
 
-	sinOp.Generate();
-	PutToFile(sinOp.GetOutput());
+	//sinOp.Generate();
+	//PutToFile(sinOp.GetOutput());
 
-	sinFlat.Generate();
-	PutToFile(sinFlat.GetOutput());
+	//sinFlat.Generate();
+	//PutToFile(sinFlat.GetOutput());
 
-	sinPositive.Generate();
-	PutToFile(sinPositive.GetOutput());
+	//sinPositive.Generate();
+	//PutToFile(sinPositive.GetOutput());
 
-	line.Generate();
+	/*line.Generate();
 	PutToFile(line.GetOutput());
 
 	minus.Generate();
@@ -112,9 +116,15 @@ int main()
 	PutToFile(rUniform.GetOutput());
 
 	rNormal.Generate();
-	PutToFile(rNormal.GetOutput());
+	PutToFile(rNormal.GetOutput());*/
 
-	mulOP1.AddInput(sinOp).AddInput(minus).Execute();
+	impulse.Generate();
+	PutToFile(impulse.GetOutput());
+
+	impulseNoise.Generate();
+	PutToFile(impulseNoise.GetOutput());
+
+	/*mulOP1.AddInput(sinOp).AddInput(minus).Execute();
 
 	sumOP.AddInput(sinFlat)
 		 .AddInput(mulOP1.Execute()).Execute();
@@ -126,7 +136,7 @@ int main()
 	sumOP1.AddInput(mulOP.Execute())
 		  .AddInput(sinFlat).Execute();
 
-	PutToFile(sumOP1.GetOutput());
+	PutToFile(sumOP1.GetOutput());*/
 
 
 

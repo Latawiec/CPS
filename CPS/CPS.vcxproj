@@ -114,11 +114,15 @@
     <ClInclude Include="Complex.h" />
     <ClInclude Include="Containers.h" />
     <ClInclude Include="Divide.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="Generator.h" />
+    <ClInclude Include="Impulse.h" />
+    <ClInclude Include="ImpulseNoise.h" />
     <ClInclude Include="INumber.h" />
     <ClInclude Include="IOutput.h" />
     <ClInclude Include="Linear.h" />
     <ClInclude Include="Multiply.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Operation.h" />
     <ClInclude Include="OperationOwner.h" />
