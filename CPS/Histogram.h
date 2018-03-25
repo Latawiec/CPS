@@ -50,17 +50,17 @@ private:
 		Data result{};
 		result.Push(Base::Array(minValueDivs + maxValueDivs));
 
-		for (uint32_t i = 0; i < minValueDivs + maxValueDivs + 1; ++i)
+		for (uint32_t i = 0; i < minValueDivs + maxValueDivs; ++i)
 		{
 			result[0].Push(i*frequency + smallestValue);
 		}
 
-		result.Push(Base::Array(minValueDivs + maxValueDivs + 1, 0.0));
+		result.Push(Base::Array(minValueDivs + maxValueDivs, 0.0));
 		{
 			uint32_t i = 0;
 			for (double value : sortedValues)
 			{
-				while (value > i*frequency + smallestValue)
+				while (value > (i+1)*frequency + smallestValue)
 				{
 					i++;
 				}
