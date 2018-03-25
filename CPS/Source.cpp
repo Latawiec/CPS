@@ -36,7 +36,7 @@
 using namespace std;
 using namespace Numeric;
 
-void PutToFile(const Base::Data& aOutput, const std::string& aName = "")
+void PutToFile(const Base::Data& aOutput, const std::string& aName = "", const std::string& aType = "")
 {
 	auto now = std::chrono::system_clock::now();
 	auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -65,7 +65,14 @@ void PutToFile(const Base::Data& aOutput, const std::string& aName = "")
 	{
 		file << '{' << '\n';
 		file << aOutput << endl;
-		file << "\"type\": \"scatter\"," << '\n';
+		if (!aType.empty())
+		{
+			file << "\"type\": \"" << aType << "\"," << '\n';
+		}
+		else
+		{
+			file << "\"type\": \"scatter\"," << '\n';
+		}
 		file << "\"name\": \"" << std::put_time(std::localtime(&in_time_t), "%Y - %m - %d_%OS") << "\"\n";
 		ss << "_" << value;
 		file << '}';
@@ -92,7 +99,7 @@ int main()
 	Power			pwr{};
 	Variance		variance{};
 	RMS				rms{};
-	Histogram		histogram{};
+	Histogram		histogram(0.1);
 
 	Sampler a(0, 0.01, 9);
 
@@ -163,7 +170,7 @@ int main()
 	PutToFile(pwr.GetOutput(), "POWER");
 
 	histogram.AddInput(sinOp).Execute();
-	PutToFile(histogram.GetOutput(), "HISTOGRAM");
+	PutToFile(histogram.GetOutput(), "HISTOGRAM", "bar");
 
 	/*mulOP1.AddInput(sinOp).AddInput(minus).Execute();
 

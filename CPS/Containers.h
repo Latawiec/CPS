@@ -17,6 +17,10 @@ struct Array
 	{
 		values.reserve(aSize);
 	}
+	Array(int aSize, Numeric::Number aValue)
+	{
+		values = std::vector<Numeric::Number>(aSize, aValue);
+	}
 	Array(const Array& aArray)
 	: values(aArray.values.begin(), aArray.values.end())
 	{}
@@ -108,7 +112,7 @@ struct Data : public Serializable
 		return arrays[aIndex];
 	}
 
-	Array operator[](unsigned int aIndex) const
+	const Array& operator[](unsigned int aIndex) const
 	{
 		return arrays[aIndex];
 	}

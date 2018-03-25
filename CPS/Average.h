@@ -27,15 +27,16 @@ private:
 		//Zrobimy to dla jednej osi danych bo mi się nie chce. Jeśli ktoś poda więcej to wywali.
 		assert(data.Size() == 2);
 
-		for (int i = 0; i < data[1].Size(); ++i)
-		{
-			averageValue += data[1][i];
-		}
-
 		if (lastIndex == 0)
 		{
 			lastIndex = data[1].Size();
 		}
+
+		for (int i = firstIndex; i < lastIndex; ++i)
+		{
+			averageValue += data[1][i];
+		}
+
 		averageValue /= (lastIndex - firstIndex + 1);
 
 		//Kopiujemy pierwsze dane.
