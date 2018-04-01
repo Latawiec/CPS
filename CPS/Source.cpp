@@ -35,6 +35,9 @@
 
 using namespace std;
 using namespace Numeric;
+using namespace Base;
+using namespace Operation;
+using namespace Generator;
 
 void PutToFile(const Base::Data& aOutput, const std::string& aName = "", const std::string& aType = "")
 {
@@ -93,7 +96,7 @@ int main()
 	Multiply		mulOP{};
 	Multiply		mulOP1{};
 	Subtract		subOP{};
-	FromFile		fileRead("../QuickDisplay/data/dupa.json");
+	//FromFile		fileRead("../QuickDisplay/data/dupa.json");
 	Average			avg{};
 	AverageMod		avgMod{};
 	Power			pwr{};
