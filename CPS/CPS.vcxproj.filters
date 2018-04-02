@@ -28,6 +28,9 @@
     <Filter Include="Header Files\Interface">
       <UniqueIdentifier>{053ae07f-abf8-436f-8898-d18cb4043bbc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Interface\TextInterface">
+      <UniqueIdentifier>{c99e4403-28c3-4ce8-86cf-c9148bf6f429}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Real.h">
@@ -102,9 +105,6 @@
     <ClInclude Include="IOutput.h">
       <Filter>Header Files\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Factory.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Impulse.h">
       <Filter>Header Files\Generators</Filter>
     </ClInclude>
@@ -132,9 +132,27 @@
     <ClInclude Include="Histogram.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
+    <ClInclude Include="ToFile.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFactory.h">
+      <Filter>Header Files\Interface\TextInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="SinCreator.h">
+      <Filter>Header Files\Interface\TextInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="InputParser.h">
+      <Filter>Header Files\Interface\TextInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="SamplerCreator.h">
+      <Filter>Header Files\Interface\TextInterface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SinCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -26,6 +26,7 @@
 #include "Square.h"
 #include "Triangle.h"
 #include "Step.h"
+#include "ToFile.h"
 #include "RandNormal.h"
 #include "RandUniform.h"
 #include "Impulse.h"
@@ -36,64 +37,17 @@
 using namespace std;
 using namespace Numeric;
 
-void PutToFile(const Base::Data& aOutput, const std::string& aName = "", const std::string& aType = "")
-{
-	auto now = std::chrono::system_clock::now();
-	auto in_time_t = std::chrono::system_clock::to_time_t(now);
-
-	std::random_device generator{};
-	std::uniform_int_distribution<int> distribution(-10000, 10000);
-	int value = distribution(generator);
-
-	std::stringstream ss;
-	ss << "../QuickDisplay/data/";
-	ss << "data_";
-	ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d_%OH-%OM-%OS");
-	if (aName.empty())
-	{
-		ss << "_" << value;
-	}
-	else
-	{
-		ss << '_' << aName;
-	}
-	ss << ".json";
-
-	fstream file;
-	file.open(ss.str(), fstream::out);
-	if (file.is_open())
-	{
-		file << '{' << '\n';
-		file << aOutput << endl;
-		if (!aType.empty())
-		{
-			file << "\"type\": \"" << aType << "\"," << '\n';
-		}
-		else
-		{
-			file << "\"type\": \"scatter\"," << '\n';
-		}
-		file << "\"name\": \"" << std::put_time(std::localtime(&in_time_t), "%Y - %m - %d_%OS") << "\"\n";
-		ss << "_" << value;
-		file << '}';
-
-		file.close();
-	}
-	else
-	{
-		throw std::runtime_error("Cannot open file.");
-	}
-}
 
 int main()
 {
+	ToFile			fileOP{};
 	Sum				sumOP{};
 	Sum				sumOP1{};
 	Divide			divOP{};
 	Multiply		mulOP{};
 	Multiply		mulOP1{};
 	Subtract		subOP{};
-	FromFile		fileRead("../QuickDisplay/data/dupa.json");
+	//FromFile		fileRead("../QuickDisplay/data/dupa.json");
 	Average			avg{};
 	AverageMod		avgMod{};
 	Power			pwr{};
@@ -119,76 +73,94 @@ int main()
 	//fileRead.Generate();
 
 	sinOp.Generate();
-	PutToFile(sinOp.GetOutput(), "SIN");
+	fileOP.AddInput(sinOp);
+	fileOP.Execute();
 
-	//sinFlat.Generate();
-	//PutToFile(sinFlat.GetOutput());
+	sinFlat.Generate();
+	fileOP.AddInput(sinFlat);
+	fileOP.Execute();
 
-	//sinPositive.Generate();
-	//PutToFile(sinPositive.GetOutput());
+	sinPositive.Generate();
+	fileOP.AddInput(sinPositive);
+	fileOP.Execute();
 
-	/*line.Generate();
-	PutToFile(line.GetOutput());
+	line.Generate();
+	fileOP.AddInput(line);
+	fileOP.Execute();
 
 	minus.Generate();
-	PutToFile(minus.GetOutput());
+	fileOP.AddInput(minus);
+	fileOP.Execute();
 
 	square.Generate();
-	PutToFile(square.GetOutput());
+	fileOP.AddInput(square);
+	fileOP.Execute();
 
 	triangle.Generate();
-	PutToFile(triangle.GetOutput());
+	fileOP.AddInput(triangle);
+	fileOP.Execute();
 
 	step.Generate();
-	PutToFile(step.GetOutput());
+	fileOP.AddInput(step);
+	fileOP.Execute();
 
 	rUniform.Generate();
-	PutToFile(rUniform.GetOutput());
+	fileOP.AddInput(rUniform);
+	fileOP.Execute();
 
 	rNormal.Generate();
-	PutToFile(rNormal.GetOutput());
+	fileOP.AddInput(rNormal);
+	fileOP.Execute();
 
 	impulse.Generate();
-	PutToFile(impulse.GetOutput());
+	fileOP.AddInput(impulse);
+	fileOP.Execute();
 
 	impulseNoise.Generate();
-	PutToFile(impulseNoise.GetOutput());*/
+	fileOP.AddInput(impulseNoise);
+	fileOP.Execute();
 
 	avg.AddInput(sinOp).Execute();
-	PutToFile(avg.GetOutput(), "AVG");
+	fileOP.AddInput(avg);
+	fileOP.Execute();
 
 	avgMod.AddInput(sinOp).Execute();
-	PutToFile(avgMod.GetOutput(), "AVGMOD");
+	fileOP.AddInput(avgMod);
+	fileOP.Execute();
 
 	variance.AddInput(sinOp).Execute();
-	PutToFile(variance.GetOutput(), "VARIANCE");
+	fileOP.AddInput(variance);
+	fileOP.Execute();
 
 	rms.AddInput(sinOp).Execute();
-	PutToFile(rms.GetOutput(), "RMS");
+	fileOP.AddInput(rms);
+	fileOP.Execute();
 
 	pwr.AddInput(sinOp).Execute();
-	PutToFile(pwr.GetOutput(), "POWER");
+	fileOP.AddInput(pwr);
+	fileOP.Execute();
 
 	histogram.AddInput(sinOp).Execute();
-	PutToFile(histogram.GetOutput(), "HISTOGRAM", "bar");
+	fileOP.AddInput(histogram);
+	fileOP.Execute();
 
-	/*mulOP1.AddInput(sinOp).AddInput(minus).Execute();
+	mulOP1.AddInput(sinOp).AddInput(minus).Execute();
 
+	mulOP1.Execute();
 	sumOP.AddInput(sinFlat)
-		 .AddInput(mulOP1.Execute()).Execute();
+		 .AddInput(mulOP1).Execute();
 	
-
-	mulOP.AddInput(sumOP.Execute())
+	sumOP.Execute();
+	mulOP.AddInput(sumOP)
 		 .AddInput(line).Execute();
 
-	sumOP1.AddInput(mulOP.Execute())
+	mulOP.Execute();
+	sumOP1.AddInput(mulOP)
 		  .AddInput(sinFlat).Execute();
 
-	PutToFile(sumOP1.GetOutput());*/
-
-
-
-
+	fileOP.AddInput(sumOP1);
+	fileOP.Execute();
+	
 	Number comp(1, 2);
 	Number comp1(3, 3);
 

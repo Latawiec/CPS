@@ -120,7 +120,10 @@
     <ClInclude Include="Complex.h" />
     <ClInclude Include="Containers.h" />
     <ClInclude Include="Divide.h" />
-    <ClInclude Include="Factory.h" />
+    <ClInclude Include="InputParser.h" />
+    <ClInclude Include="SamplerCreator.h" />
+    <ClInclude Include="SinCreator.h" />
+    <ClInclude Include="TextFactory.h" />
     <ClInclude Include="FromFile.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="Histogram.h" />
@@ -147,10 +150,12 @@
     <ClInclude Include="Step.h" />
     <ClInclude Include="Subtract.h" />
     <ClInclude Include="Sum.h" />
+    <ClInclude Include="ToFile.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Variance.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SinCreator.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

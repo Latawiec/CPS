@@ -6,7 +6,7 @@
 
 namespace Base {
 
-struct IOperation : public IOutput
+struct IOperation
 {
 	virtual ~IOperation() = default;
 

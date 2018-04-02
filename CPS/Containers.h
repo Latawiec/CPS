@@ -50,7 +50,7 @@ struct Array
 		return values[aIndex];
 	}
 
-	Numeric::Number operator[](unsigned int aIndex) const
+	const Numeric::Number& operator[](unsigned int aIndex) const
 	{
 		return values[aIndex];
 	}

@@ -5,7 +5,7 @@
 
 namespace Base{
 
-struct OperationOwner : public IOperation
+struct OperationOwner : public IOperation, public IOutput
 {
 public:
 	IOperation& AddInput(const IOutput& aData) override
@@ -28,7 +28,6 @@ public:
 	const Data& GetOutput() const override
 	{
 		return output;
-
 	}
 
 	virtual Data OperationDefinition(std::vector<const IOutput*> aData) = 0;
