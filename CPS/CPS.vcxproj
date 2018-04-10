@@ -155,7 +155,6 @@
     <ClInclude Include="Variance.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SinCreator.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

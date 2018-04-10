@@ -47,7 +47,7 @@ int main()
 	Multiply		mulOP{};
 	Multiply		mulOP1{};
 	Subtract		subOP{};
-	//FromFile		fileRead("../QuickDisplay/data/dupa.json");
+	FromFile		fileRead("../QuickDisplay/data/dupa.json");
 	Average			avg{};
 	AverageMod		avgMod{};
 	Power			pwr{};
@@ -60,7 +60,7 @@ int main()
 	Sin				sinOp(a, 1.0);
 	SinFlat			sinFlat(a, 2.0);
 	SinPositive		sinPositive(a, 2.0);
-	Linear			line(a, 0.0, 5.0);
+	Linear			line(a, 0.0, 0.0);
 	Linear			minus(a, 0.0, -1.0);
 	Square			square(a, 0.4, 3);
 	Triangle		triangle(a, 0.4, 3);
@@ -70,8 +70,24 @@ int main()
 	Impulse			impulse(a, 12);
 	ImpulseNoise    impulseNoise(a, 0.1);
 
-	//fileRead.Generate();
+	fileRead.Generate();
 
+	sinOp.Generate();
+	line.Generate();
+	sumOP.AddInput(sinOp)
+		 .AddInput(line).Execute();
+
+	fileOP.AddInput(sumOP).Execute();
+
+	pwr.AddInput(sumOP).Execute();
+	fileOP.AddInput(pwr).Execute();
+
+	variance.AddInput(sumOP).Execute();
+	fileOP.AddInput(variance).Execute();
+
+
+	//fileRead.Generate();
+/*
 	sinOp.Generate();
 	fileOP.AddInput(sinOp);
 	fileOP.Execute();
@@ -159,7 +175,7 @@ int main()
 		  .AddInput(sinFlat).Execute();
 
 	fileOP.AddInput(sumOP1);
-	fileOP.Execute();
+	fileOP.Execute();*/
 	
 	Number comp(1, 2);
 	Number comp1(3, 3);
