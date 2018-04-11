@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{789549C7-AB1F-7AF2-9E14-40846FE3841C}</ProjectGuid>
+    <ProjectGuid>{B7E3DA6F-D791-BBB1-19CD-C2068FECEC91}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>addon</RootNamespace>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
@@ -142,7 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\modules\C++\hello.cc"/>
-    <ClCompile Include="D:\CPS\CPS2.0\CPS_Electron\node_modules\node-gyp\src\win_delay_load_hook.cc"/>
+    <ClCompile Include="D:\CPS\CPS2.0\electron-quick-start-typescript\node_modules\node-gyp\src\win_delay_load_hook.cc"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
   <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets"/>

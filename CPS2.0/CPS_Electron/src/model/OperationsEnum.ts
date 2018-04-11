@@ -1,0 +1,26 @@
+
+export enum Operation {
+    Average       = "Average",
+    AverageMod    = "AverageMod",
+    Divide        = "Divide",
+    FromFile      = "FromFile",
+    Histogram     = "Histogram",
+    Impulse       = "Impulse",
+    ImpulseNoise  = "ImpulseNoise",
+    Linear        = "Linear",
+    Multiply      = "Multiply",
+    Power         = "Power",
+    RandNomral    = "RandNomral",
+    RandUniform   = "RandUniform",
+    RMS           = "RMS",
+    Sinus         = "Sinus",
+    SinusFlat     = "SinusFlat",
+    SinusPositive = "SinusPositive",
+    Square        = "Square",
+    Step          = "Step",
+    Subtract      = "Subtract",
+    Sum           = "Sum",
+    ToFile        = "ToFile",
+    Triangle      = "Triangle",
+    Variance      = "Variance"
+}

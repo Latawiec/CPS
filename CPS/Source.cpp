@@ -72,8 +72,6 @@ int main()
 
 	fileRead.Generate();
 
-	sinOp.Generate();
-	line.Generate();
 	sumOP.AddInput(sinOp)
 		 .AddInput(line).Execute();
 
@@ -85,6 +83,9 @@ int main()
 	variance.AddInput(sumOP).Execute();
 	fileOP.AddInput(variance).Execute();
 
+	sinOp.Generate();
+	line.Generate();
+	sumOP.Execute();
 
 	//fileRead.Generate();
 /*
