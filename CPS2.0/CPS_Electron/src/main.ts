@@ -22,6 +22,10 @@ sum.AddInput(sinus1);
 sum.AddOutput(tofile);
 
 console.log(util.inspect(sum, false, null));
+
+const addon = require('../build/Release/addon');
+
+console.log(addon.hello());
 //
 
 let mainWindow: Electron.BrowserWindow;
