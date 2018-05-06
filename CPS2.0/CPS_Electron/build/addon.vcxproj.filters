@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{739DB09A-CC57-A953-A6CF-F64FA08E4FA7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\modules">
+      <UniqueIdentifier>{212BF124-DF0B-CDE7-390D-94BCC1C226CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\modules\C++">
+      <UniqueIdentifier>{7266B610-BE03-5803-F1AD-568967A7480B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:">
+      <UniqueIdentifier>{E5D29F2B-0177-9942-CA95-0FF700094F89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\CPS">
+      <UniqueIdentifier>{AC35A70D-DCD1-0509-0ABE-6B5BDB25036D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\CPS\CPS2.0">
+      <UniqueIdentifier>{5E238F3E-EA34-3FBB-2C42-524D1FA305D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\CPS\CPS2.0\CPS_Electron">
+      <UniqueIdentifier>{22014530-D189-35D4-A92C-DE61137A1D2B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\CPS\CPS2.0\CPS_Electron\node_modules">
+      <UniqueIdentifier>{56DF7A98-063D-FB9D-485C-089023B4C16A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\CPS\CPS2.0\CPS_Electron\node_modules\node-gyp">
+      <UniqueIdentifier>{77348C0E-2034-7791-74D5-63C077DF5A3B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\CPS\CPS2.0\CPS_Electron\node_modules\node-gyp\src">
+      <UniqueIdentifier>{8CDEE807-BC53-E450-C8B8-4DEBB66742D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..">
+      <UniqueIdentifier>{739DB09A-CC57-A953-A6CF-F64FA08E4FA7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\modules\C++\hello.cc">
+      <Filter>..\modules\C++</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CPS\CPS2.0\CPS_Electron\node_modules\node-gyp\src\win_delay_load_hook.cc">
+      <Filter>D:\CPS\CPS2.0\CPS_Electron\node_modules\node-gyp\src</Filter>
+    </ClCompile>
+    <None Include="..\binding.gyp">
+      <Filter>..</Filter>
+    </None>
+  </ItemGroup>
+</Project>

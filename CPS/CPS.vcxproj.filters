@@ -31,6 +31,9 @@
     <Filter Include="Header Files\Interface\TextInterface">
       <UniqueIdentifier>{c99e4403-28c3-4ce8-86cf-c9148bf6f429}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Reconstructors">
+      <UniqueIdentifier>{66285a92-7572-44f0-98c3-4fec47efdc04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Real.h">
@@ -146,6 +149,39 @@
     </ClInclude>
     <ClInclude Include="SamplerCreator.h">
       <Filter>Header Files\Interface\TextInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Reconstructor.h">
+      <Filter>Header Files\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ReconstructZeroOrder.h">
+      <Filter>Header Files\Reconstructors</Filter>
+    </ClInclude>
+    <ClInclude Include="SignalSampler.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="ReconstructFirstOrder.h">
+      <Filter>Header Files\Reconstructors</Filter>
+    </ClInclude>
+    <ClInclude Include="QuantizeCut.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="QuantizeTreshold.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="ReconstructSinc.h">
+      <Filter>Header Files\Reconstructors</Filter>
+    </ClInclude>
+    <ClInclude Include="MSE.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="SNR.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="MD.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="PSNR.h">
+      <Filter>Header Files\Operations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

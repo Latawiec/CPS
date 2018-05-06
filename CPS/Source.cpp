@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <chrono>
 #include <iomanip>
 #include <sstream>
@@ -34,6 +34,16 @@
 #include "Histogram.h"
 #include "FromFile.h"
 
+#include "SignalSampler.h"
+#include "ReconstructZeroOrder.h"
+#include "ReconstructFirstOrder.h"
+#include "QuantizeCut.h"
+#include "QuantizeTreshold.h"
+#include "MSE.h"
+#include "SNR.h"
+#include "PSNR.h"
+#include "MD.h"
+
 using namespace std;
 using namespace Numeric;
 
@@ -55,9 +65,9 @@ int main()
 	RMS				rms{};
 	Histogram		histogram(0.1);
 
-	Sampler a(0, 0.01, 9);
+	Sampler a(0, 0.001, 2.0);
 
-	Sin				sinOp(a, 1.0);
+	Sin				sinOp(a, 1, 2.0);
 	SinFlat			sinFlat(a, 2.0);
 	SinPositive		sinPositive(a, 2.0);
 	Linear			line(a, 0.0, 5.0);
@@ -69,6 +79,64 @@ int main()
 	RandNormal		rNormal(a);
 	Impulse			impulse(a, 12);
 	ImpulseNoise    impulseNoise(a, 0.1);
+
+	SignalSampler	sigSampler(100);
+	ReconstructZeroOrder recZero(a);
+	ReconstructFirstOrder recFirst(a);
+	QuantizeCut quantizeCut(0.2);
+	QuantizeThreshold quantizeTreshold(1);
+	MSE mse{};
+	SNR snr{};
+	PSNR psnr{};
+	MD md;
+
+	
+	//Tworzymy sobie sinus...
+	sinOp.Generate();
+	// I myk do pliku.
+	fileOP.AddInput(sinOp).Execute();
+	
+	//Próbkujemy go ...
+	sigSampler.AddInput(sinOp).Execute();
+	// I myk do pliku
+	fileOP.AddInput(sigSampler).Execute();
+
+	//Odtwarzamy go przez ZeroOrder...
+	recZero.AddInput(sigSampler).Execute();
+	//I myk do pliku!
+	fileOP.AddInput(recZero).Execute();
+
+	//Odtwarzamy go przez FirstOrder...
+	recFirst.AddInput(sigSampler).Execute();
+	//I myk do pliku!
+	fileOP.AddInput(recFirst).Execute();
+
+	//Kwantujemy sobie sinusa ..
+	quantizeCut.AddInput(sinOp).Execute();
+	//I myyyyyyyk!
+	fileOP.AddInput(quantizeCut).Execute();
+
+	//Kwantujemy sobie sinusa ale tego średniego
+	quantizeTreshold.AddInput(sinOp).Execute();
+	//I myyyyyyyk!
+	fileOP.AddInput(quantizeTreshold).Execute();
+
+	//licząc MSE musimy mieć wartości i wartości docelowe... dodajemy obydwie
+	mse.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
+	//Do pliku
+	fileOP.AddInput(mse).Execute();
+
+	// snr - cokolwiek to jest...
+	snr.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
+	fileOP.AddInput(snr).Execute();
+
+	// max difference MD 
+	md.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
+	fileOP.AddInput(md).Execute();
+
+	//PSNR
+	psnr.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
+	fileOP.AddInput(psnr).Execute();
 
 	//fileRead.Generate();
 
