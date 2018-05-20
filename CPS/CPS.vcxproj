@@ -119,6 +119,8 @@
     <ClInclude Include="AverageMod.h" />
     <ClInclude Include="Complex.h" />
     <ClInclude Include="Containers.h" />
+    <ClInclude Include="Convolution.h" />
+    <ClInclude Include="Correlation.h" />
     <ClInclude Include="Divide.h" />
     <ClInclude Include="InputParser.h" />
     <ClInclude Include="MD.h" />

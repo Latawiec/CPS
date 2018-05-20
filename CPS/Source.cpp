@@ -44,6 +44,9 @@
 #include "PSNR.h"
 #include "MD.h"
 
+#include "Convolution.h"
+#include "Correlation.h"
+
 using namespace std;
 using namespace Numeric;
 
@@ -90,31 +93,36 @@ int main()
 	PSNR psnr{};
 	MD md;
 
+	Convolution conv;
+	Correlation corr;
+
 	
+	square.Generate();
+
 	//Tworzymy sobie sinus...
 	sinOp.Generate();
 	// I myk do pliku.
-	fileOP.AddInput(sinOp).Execute();
+	//fileOP.AddInput(sinOp).Execute();
 	
 	//Próbkujemy go ...
 	sigSampler.AddInput(sinOp).Execute();
 	// I myk do pliku
-	fileOP.AddInput(sigSampler).Execute();
+	//fileOP.AddInput(sigSampler).Execute();
 
 	//Odtwarzamy go przez ZeroOrder...
 	recZero.AddInput(sigSampler).Execute();
 	//I myk do pliku!
-	fileOP.AddInput(recZero).Execute();
+	//fileOP.AddInput(recZero).Execute();
 
 	//Odtwarzamy go przez FirstOrder...
 	recFirst.AddInput(sigSampler).Execute();
 	//I myk do pliku!
-	fileOP.AddInput(recFirst).Execute();
+	//fileOP.AddInput(recFirst).Execute();
 
 	//Kwantujemy sobie sinusa ..
 	quantizeCut.AddInput(sinOp).Execute();
 	//I myyyyyyyk!
-	fileOP.AddInput(quantizeCut).Execute();
+	//fileOP.AddInput(quantizeCut).Execute();
 
 	//Kwantujemy sobie sinusa ale tego średniego
 	quantizeTreshold.AddInput(sinOp).Execute();
@@ -124,19 +132,26 @@ int main()
 	//licząc MSE musimy mieć wartości i wartości docelowe... dodajemy obydwie
 	mse.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
 	//Do pliku
-	fileOP.AddInput(mse).Execute();
+	//fileOP.AddInput(mse).Execute();
 
 	// snr - cokolwiek to jest...
 	snr.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
-	fileOP.AddInput(snr).Execute();
+	//fileOP.AddInput(snr).Execute();
 
 	// max difference MD 
 	md.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
-	fileOP.AddInput(md).Execute();
+	//fileOP.AddInput(md).Execute();
 
 	//PSNR
 	psnr.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
-	fileOP.AddInput(psnr).Execute();
+	//fileOP.AddInput(psnr).Execute();
+
+	// Splot kurwa
+	conv.AddInput(sinOp).AddInput(square).Execute();
+	corr.AddInput(sinOp).AddInput(square).Execute();
+
+	fileOP.AddInput(conv).Execute();
+	fileOP.AddInput(corr).Execute();
 
 	//fileRead.Generate();
 /*

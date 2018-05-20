@@ -183,6 +183,12 @@
     <ClInclude Include="PSNR.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
+    <ClInclude Include="Convolution.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Correlation.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
