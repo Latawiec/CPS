@@ -54,213 +54,152 @@ using namespace Numeric;
 
 int main()
 {
-	ToFile			fileOP{};
-	Sum				sumOP{};
-	Sum				sumOP1{};
-	Divide			divOP{};
-	Multiply		mulOP{};
-	Multiply		mulOP1{};
-	Subtract		subOP{};
-	FromFile		fileRead("../QuickDisplay/data/dupa.json");
-	Average			avg{};
-	AverageMod		avgMod{};
-	Power			pwr{};
-	Variance		variance{};
-	RMS				rms{};
-	Histogram		histogram(0.1);
+	//ToFile			fileOP{};
+	//Sum				sumOP{};
+	//Sum				sumOP1{};
+	//Divide			divOP{};
+	//Multiply		mulOP{};
+	//Multiply		mulOP1{};
+	//Subtract		subOP{};
+	//FromFile		fileRead("../QuickDisplay/data/dupa.json");
+	//Average			avg{};
+	//AverageMod		avgMod{};
+	//Power			pwr{};
+	//Variance		variance{};
+	//RMS				rms{};
+	//Histogram		histogram(0.1);
 
-	Sampler a(0, 0.05, 10.0);
+	//Sampler a(0, 0.05, 5.0);
 
-	Sin				sinOp(a, 1, 2.0);
-	SinFlat			sinFlat(a, 2.0);
-	SinPositive		sinPositive(a, 2.0);
-	Linear			line(a, 0.0, 0.0);
-	Linear			minus(a, 0.0, -1.0);
-	Square			square(a, 0.4, 3);
-	Triangle		triangle(a, 0.4, 3);
-	Step			step(a, 5);
-	RandUniform		rUniform(a, 5);
-	RandNormal		rNormal(a);
-	Impulse			impulse(a, 12);
-	ImpulseNoise    impulseNoise(a, 0.1);
+	//Sin				sinOp(a, 1, 2.0);
+	//Sin				sinOpMoved(a, 1, 2.0, 0.25);
+	//SinFlat			sinFlat(a, 2.0);
+	//SinPositive		sinPositive(a, 2.0);
+	//Linear			line(a, 0.0, 0.0);
+	//Linear			minus(a, 0.0, -1.0);
+	//Square			square(a, 0.4, 3);
+	//Triangle		triangle(a, 0.4, 3);
+	//Step			step(a, 5);
+	//RandUniform		rUniform(a, 5);
+	//RandNormal		rNormal(a);
+	//Impulse			impulse(a, 12);
+	//ImpulseNoise    impulseNoise(a, 0.1);
 
-	SignalSampler	sigSampler(100);
-	ReconstructZeroOrder recZero(a);
-	ReconstructFirstOrder recFirst(a);
-	QuantizeCut quantizeCut(0.2);
-	QuantizeThreshold quantizeTreshold(1);
-	MSE mse{};
-	SNR snr{};
-	PSNR psnr{};
-	MD md;
+	//SignalSampler	sigSampler(100);
+	//ReconstructZeroOrder recZero(a);
+	//ReconstructFirstOrder recFirst(a);
+	//QuantizeCut quantizeCut(0.2);
+	//QuantizeThreshold quantizeTreshold(1);
+	//MSE mse{};
+	//SNR snr{};
+	//PSNR psnr{};
+	//MD md;
 
-	Convolution conv;
-	Correlation corr;
-	Filter<FilterType::Middle>    filter(256, 100, 8);
+	//Convolution conv;
+	//Correlation corr;
+	//Filter<FilterType::Up, Blackman>    filter(200, 10, 10);
 
-	rUniform.Generate();
-	square.Generate();
+// ZADANIE 3
 
-	//Tworzymy sobie sinus...
-	sinOp.Generate();
-	// I myk do pliku.
-	//fileOP.AddInput(sinOp).Execute();
-	
-	//Próbkujemy go ...
-	sigSampler.AddInput(sinOp).Execute();
-	// I myk do pliku
-	//fileOP.AddInput(sigSampler).Execute();
+	// Jakiś tam splot. Nie wiem co tu ciekawego...
+	{
+		Sampler	   sampler(0, 0.01, 10.0);
+		Sin		   sin(sampler, 1, 1.0);
+		RandNormal noise(sampler);
+		{
+			sin.Generate();
+			ToFile f("Sinus_splot");
+			f.AddInput(sin).Execute();
+		}
+		{
+			noise.Generate();
+			ToFile f("Szum_splot");
+			f.AddInput(noise).Execute();
+		}
+		{
+			Convolution conv;
+			conv.AddInput(sin).AddInput(noise).Execute();
+			ToFile f("Splot");
+			f.AddInput(conv).Execute();
+		}
+	}
 
-	//Odtwarzamy go przez ZeroOrder...
-	recZero.AddInput(sigSampler).Execute();
-	//I myk do pliku!
-	//fileOP.AddInput(recZero).Execute();
+	// Filtracja... nie mam pojecia...
+	{
+		Sampler	   sampler(0, 0.01, 20.0);
+		Sin		   sin(sampler, 1, 1.0);
+		{
+			sin.Generate();
+			ToFile f("Filtr_sygnal");
+			f.AddInput(sin).Execute();
+		}
+		{
+			// Filtr górnoprzepustowy z oknem Prostokatnym
+			// N=200, K=10, M=10 
+			Filter<FilterType::Up, Prostokatne>    filter(200, 10, 10);
+			filter.AddInput(sin).Execute();
+			ToFile f("filtr_UP_Prostokatne");
+			f.AddInput(filter).Execute();
+		}
+		{
+			// Filtr środkowoprzepustowy z oknem Blackmana
+			// N=50, K=8, M=20
+			Filter<FilterType::Middle, Blackman>    filter(50, 8, 20);
+			filter.AddInput(sin).Execute();
+			ToFile f("filtr_MID_Blackman");
+			f.AddInput(filter).Execute();
+		}
+		{
+			// Filtr środkowoprzepustowy z oknem Blackmana
+			// N=80, K=8, M=20
+			Filter<FilterType::Down, Hamming>    filter(80, 8, 20);
+			filter.AddInput(sin).Execute();
+			ToFile f("filtr_Down_Hamming");
+			f.AddInput(filter).Execute();
+		}
+		{
+			// Filtr środkowoprzepustowy z oknem Hanna (Hanning'a)
+			// N=50, K=8, M=20
+			Filter<FilterType::Up, Hanna>    filter(50, 8, 20);
+			filter.AddInput(sin).Execute();
+			ToFile f("filtr_UP_Hanna");
+			f.AddInput(filter).Execute();
+		}
+	}
 
-	//Odtwarzamy go przez FirstOrder...
-	recFirst.AddInput(sigSampler).Execute();
-	//I myk do pliku!
-	//fileOP.AddInput(recFirst).Execute();
+	// To z radarem - korelacja
+	{
+		Sampler sampler(0, 0.05, 5.0);
 
-	//Kwantujemy sobie sinusa ..
-	quantizeCut.AddInput(sinOp).Execute();
-	//I myyyyyyyk!
-	//fileOP.AddInput(quantizeCut).Execute();
+		Sin		sinOp(sampler, 1, 2.0);
+		Sin		sinOpMoved(sampler, 1, 2.0, 0.25);
+		{
 
-	//Kwantujemy sobie sinusa ale tego średniego
-	quantizeTreshold.AddInput(sinOp).Execute();
-	//I myyyyyyyk!
-	fileOP.AddInput(quantizeTreshold).Execute();
+			sinOp.Generate();
+			ToFile f("Sinus_normalny", "normalny");
+			f.AddInput(sinOp).Execute();
+		}
+		{
+			sinOpMoved.Generate();
+			ToFile f("Sinus_przesuniety", "przesuniety");
+			f.AddInput(sinOpMoved).Execute();
+		}
+		
+		/*
+		  sinOpMoved jest przesunięty
+		  o 0.25. Próbkowanie jest ustawione na 0.05.
+		  Więc przesuwamy o równo 5 próbek. 
 
-	//licząc MSE musimy mieć wartości i wartości docelowe... dodajemy obydwie
-	mse.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
-	//Do pliku
-	//fileOP.AddInput(mse).Execute();
+		  Korelacja powinna wypluć sygnał, którego maximum jest przesunięte
+		  względem środka wszystkich próbek o 5.
+		  Tak też robi.
+		*/
+		{
+			Correlation corr;
+			corr.AddInput(sinOp).AddInput(sinOpMoved).Execute();
+			ToFile f("Radar_wyjscie", "korelacja");
+			f.AddInput(corr).Execute();
+		}
+	}
 
-	// snr - cokolwiek to jest...
-	snr.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
-	//fileOP.AddInput(snr).Execute();
-
-	// max difference MD 
-	md.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
-	//fileOP.AddInput(md).Execute();
-
-	//PSNR
-	psnr.AddInput(quantizeTreshold).AddInput(sinOp).Execute();
-	//fileOP.AddInput(psnr).Execute();
-
-	// Splot kurwa
-	conv.AddInput(sinOp).AddInput(rUniform).Execute();
-	fileOP.AddInput(conv).Execute();
-	// Korelacja
-	corr.AddInput(sinOp).AddInput(square).Execute();
-	// Filtrowanie
-	filter.AddInput(conv).Execute();
-
-	fileOP.AddInput(conv).Execute();
-	fileOP.AddInput(corr).Execute();
-	fileOP.AddInput(filter).Execute();
-
-
-
-	//fileRead.Generate();
-/*
-	sinOp.Generate();
-	fileOP.AddInput(sinOp);
-	fileOP.Execute();
-
-	sinFlat.Generate();
-	fileOP.AddInput(sinFlat);
-	fileOP.Execute();
-
-	sinPositive.Generate();
-	fileOP.AddInput(sinPositive);
-	fileOP.Execute();
-
-	line.Generate();
-	fileOP.AddInput(line);
-	fileOP.Execute();
-
-	minus.Generate();
-	fileOP.AddInput(minus);
-	fileOP.Execute();
-
-	square.Generate();
-	fileOP.AddInput(square);
-	fileOP.Execute();
-
-	triangle.Generate();
-	fileOP.AddInput(triangle);
-	fileOP.Execute();
-
-	step.Generate();
-	fileOP.AddInput(step);
-	fileOP.Execute();
-
-	rUniform.Generate();
-	fileOP.AddInput(rUniform);
-	fileOP.Execute();
-
-	rNormal.Generate();
-	fileOP.AddInput(rNormal);
-	fileOP.Execute();
-
-	impulse.Generate();
-	fileOP.AddInput(impulse);
-	fileOP.Execute();
-
-	impulseNoise.Generate();
-	fileOP.AddInput(impulseNoise);
-	fileOP.Execute();
-
-	avg.AddInput(sinOp).Execute();
-	fileOP.AddInput(avg);
-	fileOP.Execute();
-
-	avgMod.AddInput(sinOp).Execute();
-	fileOP.AddInput(avgMod);
-	fileOP.Execute();
-
-	variance.AddInput(sinOp).Execute();
-	fileOP.AddInput(variance);
-	fileOP.Execute();
-
-	rms.AddInput(sinOp).Execute();
-	fileOP.AddInput(rms);
-	fileOP.Execute();
-
-	pwr.AddInput(sinOp).Execute();
-	fileOP.AddInput(pwr);
-	fileOP.Execute();
-
-	histogram.AddInput(sinOp).Execute();
-	fileOP.AddInput(histogram);
-	fileOP.Execute();
-
-	mulOP1.AddInput(sinOp).AddInput(minus).Execute();
-
-	mulOP1.Execute();
-	sumOP.AddInput(sinFlat)
-		 .AddInput(mulOP1).Execute();
-	
-	sumOP.Execute();
-	mulOP.AddInput(sumOP)
-		 .AddInput(line).Execute();
-
-	mulOP.Execute();
-	sumOP1.AddInput(mulOP)
-		  .AddInput(sinFlat).Execute();
-
-	fileOP.AddInput(sumOP1);
-	fileOP.Execute();*/
-	
-	Number comp(1, 2);
-	Number comp1(3, 3);
-
-	Number sum = comp + comp1;
-
-	Number real(1);
-
-	sum += real;
-
-	cout << "XD" << endl;
 }

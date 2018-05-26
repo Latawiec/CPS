@@ -24,7 +24,25 @@ class Hamming : public Okno
 public:
 	static float Calculate(const uint32_t n, const uint32_t M)
 	{
-		return 0;
+		return 0.53836 - 0.46164*cos((2 * 3.1415926535 * n) / M);
+	}
+};
+
+class Hanna : public Okno
+{
+public:
+	static float Calculate(const uint32_t n, const uint32_t M)
+	{
+		return 0.5 - 0.5*cos((2 * 3.1415926535 * n) / M);
+	}
+};
+
+class Blackman : public Okno
+{
+public:
+	static float Calculate(const uint32_t n, const uint32_t M)
+	{
+		return 0.42 - 0.5*cos((2 * 3.1415926535 * n) / M) + 0.08*cos((4 * 3.1415926535 * n) / M);
 	}
 };
 
@@ -138,6 +156,11 @@ public:
 	Filter(const uint32_t n, const uint32_t m, const uint32_t k)
 	: impulseResponseOp(n, m, k, Type)
 	{}
+
+	const ImpulseResponse<Okno>& GetImpulseResponse()
+	{
+		return impulseResponseOp;
+	}
 
 private:
 	Convolution				convolutionOp;
