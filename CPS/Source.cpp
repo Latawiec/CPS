@@ -46,6 +46,7 @@
 
 #include "Convolution.h"
 #include "Correlation.h"
+#include "Filter.h"
 
 using namespace std;
 using namespace Numeric;
@@ -68,7 +69,7 @@ int main()
 	RMS				rms{};
 	Histogram		histogram(0.1);
 
-	Sampler a(0, 0.001, 2.0);
+	Sampler a(0, 0.05, 10.0);
 
 	Sin				sinOp(a, 1, 2.0);
 	SinFlat			sinFlat(a, 2.0);
@@ -95,8 +96,9 @@ int main()
 
 	Convolution conv;
 	Correlation corr;
+	Filter<FilterType::Middle>    filter(256, 100, 8);
 
-	
+	rUniform.Generate();
 	square.Generate();
 
 	//Tworzymy sobie sinus...
@@ -147,11 +149,18 @@ int main()
 	//fileOP.AddInput(psnr).Execute();
 
 	// Splot kurwa
-	conv.AddInput(sinOp).AddInput(square).Execute();
+	conv.AddInput(sinOp).AddInput(rUniform).Execute();
+	fileOP.AddInput(conv).Execute();
+	// Korelacja
 	corr.AddInput(sinOp).AddInput(square).Execute();
+	// Filtrowanie
+	filter.AddInput(conv).Execute();
 
 	fileOP.AddInput(conv).Execute();
 	fileOP.AddInput(corr).Execute();
+	fileOP.AddInput(filter).Execute();
+
+
 
 	//fileRead.Generate();
 /*

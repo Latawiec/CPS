@@ -23,7 +23,7 @@ private:
 		Data lastResult = {};
 
 		const Data& one = aData[0]->GetOutput();
-		const Data& two = aData[0]->GetOutput();
+		const Data& two = aData[1]->GetOutput();
 
 		uint32_t outputSize = one[1].Size() + two[1].Size() - 1;
 
