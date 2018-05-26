@@ -122,6 +122,7 @@
     <ClInclude Include="Convolution.h" />
     <ClInclude Include="Correlation.h" />
     <ClInclude Include="Divide.h" />
+    <ClInclude Include="Filter.h" />
     <ClInclude Include="InputParser.h" />
     <ClInclude Include="MD.h" />
     <ClInclude Include="MSE.h" />
