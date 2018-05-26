@@ -126,18 +126,24 @@ int main()
 
 	// Filtracja... nie mam pojecia...
 	{
-		Sampler	   sampler(0, 0.01, 20.0);
+		Sampler	   sampler(0, 0.01, 10.0);
 		Sin		   sin(sampler, 1, 1.0);
+		sin.Generate();
+
+		RandNormal noise(sampler);
+		noise.Generate();
+
+		Convolution conv;
+		conv.AddInput(sin).AddInput(noise).Execute();
 		{
-			sin.Generate();
 			ToFile f("Filtr_sygnal");
-			f.AddInput(sin).Execute();
+			f.AddInput(conv).Execute();
 		}
 		{
 			// Filtr górnoprzepustowy z oknem Prostokatnym
 			// N=200, K=10, M=10 
 			Filter<FilterType::Up, Prostokatne>    filter(200, 10, 10);
-			filter.AddInput(sin).Execute();
+			filter.AddInput(conv).Execute();
 			ToFile f("filtr_UP_Prostokatne");
 			f.AddInput(filter).Execute();
 		}
@@ -145,7 +151,7 @@ int main()
 			// Filtr środkowoprzepustowy z oknem Blackmana
 			// N=50, K=8, M=20
 			Filter<FilterType::Middle, Blackman>    filter(50, 8, 20);
-			filter.AddInput(sin).Execute();
+			filter.AddInput(conv).Execute();
 			ToFile f("filtr_MID_Blackman");
 			f.AddInput(filter).Execute();
 		}
@@ -153,7 +159,7 @@ int main()
 			// Filtr środkowoprzepustowy z oknem Blackmana
 			// N=80, K=8, M=20
 			Filter<FilterType::Down, Hamming>    filter(80, 8, 20);
-			filter.AddInput(sin).Execute();
+			filter.AddInput(conv).Execute();
 			ToFile f("filtr_Down_Hamming");
 			f.AddInput(filter).Execute();
 		}
@@ -161,7 +167,7 @@ int main()
 			// Filtr środkowoprzepustowy z oknem Hanna (Hanning'a)
 			// N=50, K=8, M=20
 			Filter<FilterType::Up, Hanna>    filter(50, 8, 20);
-			filter.AddInput(sin).Execute();
+			filter.AddInput(conv).Execute();
 			ToFile f("filtr_UP_Hanna");
 			f.AddInput(filter).Execute();
 		}
