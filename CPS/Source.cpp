@@ -48,6 +48,10 @@
 #include "Correlation.h"
 #include "Filter.h"
 
+#include "DFT.h"
+#include "IDFT.h"
+#include "FFT_DFT.h"
+
 using namespace std;
 using namespace Numeric;
 
@@ -102,7 +106,7 @@ int main()
 // ZADANIE 3
 
 	// Jakiś tam splot. Nie wiem co tu ciekawego...
-	{
+	/*{
 		Sampler	   sampler(0, 0.01, 10.0);
 		Sin		   sin(sampler, 1, 1.0);
 		RandNormal noise(sampler);
@@ -122,59 +126,59 @@ int main()
 			ToFile f("Splot");
 			f.AddInput(conv).Execute();
 		}
-	}
+	}*/
 
 	// Filtracja... nie mam pojecia...
-	{
-		Sampler	   sampler(0, 0.01, 10.0);
-		Sin		   sin(sampler, 1, 1.0);
-		sin.Generate();
+	//{
+	//	Sampler	   sampler(0, 0.01, 10.0);
+	//	Sin		   sin(sampler, 1, 1.0);
+	//	sin.Generate();
 
-		RandNormal noise(sampler);
-		noise.Generate();
+	//	RandNormal noise(sampler);
+	//	noise.Generate();
 
-		Convolution conv;
-		conv.AddInput(sin).AddInput(noise).Execute();
-		{
-			ToFile f("Filtr_sygnal");
-			f.AddInput(conv).Execute();
-		}
-		{
-			// Filtr górnoprzepustowy z oknem Prostokatnym
-			// N=200, K=10, M=10 
-			Filter<FilterType::Up, Prostokatne>    filter(200, 10, 10);
-			filter.AddInput(conv).Execute();
-			ToFile f("filtr_UP_Prostokatne");
-			f.AddInput(filter).Execute();
-		}
-		{
-			// Filtr środkowoprzepustowy z oknem Blackmana
-			// N=50, K=8, M=20
-			Filter<FilterType::Middle, Blackman>    filter(50, 8, 20);
-			filter.AddInput(conv).Execute();
-			ToFile f("filtr_MID_Blackman");
-			f.AddInput(filter).Execute();
-		}
-		{
-			// Filtr środkowoprzepustowy z oknem Blackmana
-			// N=80, K=8, M=20
-			Filter<FilterType::Down, Hamming>    filter(80, 8, 20);
-			filter.AddInput(conv).Execute();
-			ToFile f("filtr_Down_Hamming");
-			f.AddInput(filter).Execute();
-		}
-		{
-			// Filtr środkowoprzepustowy z oknem Hanna (Hanning'a)
-			// N=50, K=8, M=20
-			Filter<FilterType::Up, Hanna>    filter(50, 8, 20);
-			filter.AddInput(conv).Execute();
-			ToFile f("filtr_UP_Hanna");
-			f.AddInput(filter).Execute();
-		}
-	}
+	//	Convolution conv;
+	//	conv.AddInput(sin).AddInput(noise).Execute();
+	//	{
+	//		ToFile f("Filtr_sygnal");
+	//		f.AddInput(conv).Execute();
+	//	}
+	//	{
+	//		// Filtr górnoprzepustowy z oknem Prostokatnym
+	//		// N=200, K=10, M=10 
+	//		Filter<FilterType::Up, Prostokatne>    filter(200, 10, 10);
+	//		filter.AddInput(conv).Execute();
+	//		ToFile f("filtr_UP_Prostokatne");
+	//		f.AddInput(filter).Execute();
+	//	}
+	//	{
+	//		// Filtr środkowoprzepustowy z oknem Blackmana
+	//		// N=50, K=8, M=20
+	//		Filter<FilterType::Middle, Blackman>    filter(50, 8, 20);
+	//		filter.AddInput(conv).Execute();
+	//		ToFile f("filtr_MID_Blackman");
+	//		f.AddInput(filter).Execute();
+	//	}
+	//	{
+	//		// Filtr środkowoprzepustowy z oknem Blackmana
+	//		// N=80, K=8, M=20
+	//		Filter<FilterType::Down, Hamming>    filter(80, 8, 20);
+	//		filter.AddInput(conv).Execute();
+	//		ToFile f("filtr_Down_Hamming");
+	//		f.AddInput(filter).Execute();
+	//	}
+	//	{
+	//		// Filtr środkowoprzepustowy z oknem Hanna (Hanning'a)
+	//		// N=50, K=8, M=20
+	//		Filter<FilterType::Up, Hanna>    filter(50, 8, 20);
+	//		filter.AddInput(conv).Execute();
+	//		ToFile f("filtr_UP_Hanna");
+	//		f.AddInput(filter).Execute();
+	//	}
+	//}
 
 	// To z radarem - korelacja
-	{
+	/*{
 		Sampler sampler(0, 0.05, 5.0);
 
 		Sin		sinOp(sampler, 1, 2.0);
@@ -189,23 +193,63 @@ int main()
 			sinOpMoved.Generate();
 			ToFile f("Sinus_przesuniety", "przesuniety");
 			f.AddInput(sinOpMoved).Execute();
-		}
-		
+		}*/
+
 		/*
 		  sinOpMoved jest przesunięty
 		  o 0.25. Próbkowanie jest ustawione na 0.05.
-		  Więc przesuwamy o równo 5 próbek. 
+		  Więc przesuwamy o równo 5 próbek.
 
 		  Korelacja powinna wypluć sygnał, którego maximum jest przesunięte
 		  względem środka wszystkich próbek o 5.
 		  Tak też robi.
 		*/
-		{
-			Correlation corr;
-			corr.AddInput(sinOp).AddInput(sinOpMoved).Execute();
-			ToFile f("Radar_wyjscie", "korelacja");
-			f.AddInput(corr).Execute();
-		}
+		/*	{
+				Correlation corr;
+				corr.AddInput(sinOp).AddInput(sinOpMoved).Execute();
+				ToFile f("Radar_wyjscie", "korelacja");
+				f.AddInput(corr).Execute();
+			}
+		}*/
+
+		// ZADANIE 4 - DFT
+
+	{
+		Sampler	   sampler(0, 0.01, 10.239);
+		Sin		   sin(sampler, 1, 1.0);
+		Sin		   sin2(sampler, 5, 1.0);
+		Multiply   mul{};
+		sin.Generate();
+		sin2.Generate();
+		mul.AddInput(sin).AddInput(sin2).Execute();
+
+		ToFile outsin1("sin1");
+		outsin1.AddInput(sin).Execute();
+
+		ToFile outsin2("sin2");
+		outsin2.AddInput(sin2).Execute();
+
+		DFT		   dft;
+		dft.AddInput(mul).Execute();
+		
+		IDFT		idft;
+		idft.AddInput(dft).Execute();
+
+		FFT_DFT		fft;
+		fft.AddInput(sin).Execute();
+
+		ToFile outFFT("fft");
+		outFFT.AddInput(fft).Execute();
+
+		ToFile outDFT("dft");
+		outDFT.AddInput(dft).Execute();
+
+		ToFile outSin("mul");
+		outSin.AddInput(mul).Execute();
+
+		ToFile outIDFT("idft");
+		outIDFT.AddInput(idft).Execute();
 	}
+
 
 }

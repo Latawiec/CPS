@@ -29,6 +29,26 @@ struct Array
 	: values(std::move(aArray.values))
 	{}
 
+	std::vector<Numeric::Number>::const_iterator begin() const
+	{
+		return values.begin();
+	}
+
+	std::vector<Numeric::Number>::iterator begin()
+	{
+		return values.begin();
+	}
+
+	std::vector<Numeric::Number>::const_iterator end() const
+	{
+		return values.end();
+	}
+
+	std::vector<Numeric::Number>::iterator end()
+	{
+		return values.end();
+	}
+
 	Array& operator=(const Array& aArray)
 	{
 		values = std::vector<Numeric::Number>(aArray.values.begin(), aArray.values.end());
@@ -142,8 +162,13 @@ struct Data : public Serializable
 
 			if (array.Type() == Numeric::INumber::Type::Complex)
 			{
-				aStream << "//Cannot serialize Complex numbers yet :(((\n";
-				//Add serialization of imaginary part. There's no function provided for fetching that value yet xD.
+				aStream << '\t' << '\"' << dumbAxisName << 'i' << '\"' << ": [";
+				aStream << double(array[0].Im());
+				for (unsigned int i = 1; i < array.Size(); ++i)
+				{
+					aStream << ',' << double(array[i].Im());
+				}
+				aStream << "],\n";
 			}
 			dumbAxisName++;
 		}

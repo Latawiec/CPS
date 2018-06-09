@@ -30,6 +30,16 @@ public:
 		return numberPimpl->GetValues()[0];
 	}
 
+	double Re() const
+	{
+		return numberPimpl->GetValues()[0];
+	}
+
+	double Im() const
+	{
+		return numberPimpl->GetValues()[1];
+	}
+
 	Number& operator=(const Number& aNumber)
 	{
 		numberPimpl.reset(aNumber.numberPimpl->clone());
@@ -74,7 +84,6 @@ public:
 		numberPimpl->MultiplyHere(aNumber.numberPimpl.get());
 		return *this;
 	}
-
 	
 	Number operator/(double aValue) const
 	{

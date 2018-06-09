@@ -192,6 +192,15 @@
     <ClInclude Include="Filter.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
+    <ClInclude Include="DFT.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="IDFT.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="FFT_DFT.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
