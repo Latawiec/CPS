@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <bitset>
 #include <map>
+#include <complex>
 #include "IOutput.h"
 
 class FFT_DIT : public Base::OperationOwner
@@ -26,7 +27,7 @@ private:
 		TwiddleFactors(uint32_t N)
 		: N(N)
 		{
-			double two_PI = 6.2831853071795864;;
+			double two_PI = 6.2831853071795864;
 			_values.reserve(N);
 			for(uint32_t i = 0; i < N; ++i)
 			{
@@ -42,6 +43,18 @@ private:
 		std::vector<Numeric::Number> _values;
 		const uint32_t N;
 	};
+
+	static uint32_t FlipBits(uint32_t value, const uint8_t size)
+	{
+		uint32_t flipped = 0;
+		for (uint8_t b = 0; b < size; ++b)
+		{
+			flipped = flipped << 1;
+			flipped |= (value & 0x1);
+			value = value >> 1;
+		}
+		return flipped;
+	}
 
 	Base::Data OperationDefinition(std::vector<const IOutput*> aData) override
 	{
@@ -70,23 +83,9 @@ private:
 
 		// Taktyczna kopia
 		Base::Array fftValues(data[1].Size());
-		for (const auto& value : data[1])
+		for(uint32_t i=0; i<dataSize; ++i)
 		{
-			fftValues.Push(Number(value, 0));
-		}
-
-		// Taktyczna zamiana kolejności aby była adekwatna do FFT
-		for (uint32_t i = 0; i < fftValues.Size() / 2; ++i)
-		{
-			uint32_t original = i;
-			uint32_t flipped = 0;
-			for (uint8_t b = 0; b < numberOfStages; ++b)
-			{
-				flipped = flipped << 1;
-				flipped |= (original & 0x1);
-				original = original >> 1;
-			}
-			std::swap(fftValues[i], fftValues[flipped]);
+			fftValues.Push(Number(data[1][FlipBits(i, numberOfStages)], 0.0));
 		}
 
 		// Właście FFT
@@ -106,8 +105,11 @@ private:
 					fftValues[sampleIndex + samplesInGroup/2] *= twFactors.Get(sample);
 					Number tempFirst = fftValues[sampleIndex];
 
-					fftValues[sampleIndex]					  = tempFirst + fftValues[sampleIndex + samplesInGroup/2];
-					fftValues[sampleIndex + samplesInGroup/2] = tempFirst - fftValues[sampleIndex + samplesInGroup/2];
+					Number& first = fftValues[sampleIndex];
+					Number& second = fftValues[sampleIndex + samplesInGroup / 2];
+
+					first = tempFirst + fftValues[sampleIndex + samplesInGroup/2];
+					second = tempFirst - fftValues[sampleIndex + samplesInGroup/2];
 				}
 			}
 		}
