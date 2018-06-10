@@ -50,7 +50,8 @@
 
 #include "DFT.h"
 #include "IDFT.h"
-#include "FFT_DFT.h"
+#include "FFT_DIT.h"
+#include "FFT_DIF.h"
 
 using namespace std;
 using namespace Numeric;
@@ -214,41 +215,63 @@ int main()
 
 		// ZADANIE 4 - DFT
 
+	Numeric::Number a(1.0, 1.0);
+	Numeric::Number b(2.0, 2.0);
+
+	a /= b;
+
+	Numeric::Number c = a / b;
+
+
+	// Sygnał S(1) do zadania.
+	Sum sygnal{};
 	{
-		Sampler	   sampler(0, 0.01, 10.239);
-		Sin		   sin(sampler, 1, 1.0);
-		Sin		   sin2(sampler, 5, 1.0);
-		Multiply   mul{};
-		sin.Generate();
+		constexpr double PI = 3.141592653589793238;
+		Sampler sampler(0, 0.015625, 3.99999999);
+		Sin		sin1(sampler, 2.0, 2.0, PI/2.0);
+		Sin     sin2(sampler, 0.5, 5.0, PI/2.0);
+
+		sin1.Generate();
 		sin2.Generate();
-		mul.AddInput(sin).AddInput(sin2).Execute();
+		sygnal.AddInput(sin1).AddInput(sin2).Execute();
 
-		ToFile outsin1("sin1");
-		outsin1.AddInput(sin).Execute();
+		ToFile out("sygnal");
+		out.AddInput(sygnal).Execute();
+	}
 
-		ToFile outsin2("sin2");
-		outsin2.AddInput(sin2).Execute();
 
+
+	{
 		DFT		   dft;
-		dft.AddInput(mul).Execute();
+		dft.AddInput(sygnal).Execute();
+		{
+			ToFile out("dft");
+			out.AddInput(dft).Execute();
+		}
 		
-		IDFT		idft;
-		idft.AddInput(dft).Execute();
+		{
+			IDFT		idft;
+			idft.AddInput(dft).Execute();
 
-		FFT_DFT		fft;
-		fft.AddInput(sin).Execute();
+			ToFile out("idft_DFT");
+			out.AddInput(idft).Execute();
+		}
 
-		ToFile outFFT("fft");
-		outFFT.AddInput(fft).Execute();
+		FFT_DIT		fft_dit;
+		fft_dit.AddInput(sygnal).Execute();
+		{
+			ToFile out("fft_dit");
+			out.AddInput(fft_dit).Execute();
+		}
 
-		ToFile outDFT("dft");
-		outDFT.AddInput(dft).Execute();
+		{
+			IDFT		idft;
+			idft.AddInput(fft_dit).Execute();
 
-		ToFile outSin("mul");
-		outSin.AddInput(mul).Execute();
+			ToFile out("idft_fft_dit");
+			out.AddInput(idft).Execute();
+		}
 
-		ToFile outIDFT("idft");
-		outIDFT.AddInput(idft).Execute();
 	}
 
 

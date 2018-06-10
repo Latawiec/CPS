@@ -198,7 +198,10 @@
     <ClInclude Include="IDFT.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
-    <ClInclude Include="FFT_DFT.h">
+    <ClInclude Include="FFT_DIT.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="FFT_DIF.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
   </ItemGroup>

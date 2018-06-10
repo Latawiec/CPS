@@ -41,6 +41,7 @@ private:
 				result += value * ei((two_PI * m * n) / dataSize);
 				n++;
 			}
+			result /= double(dataSize);
 			dftValues.Push(std::move(result));
 		}
 

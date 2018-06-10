@@ -11,22 +11,19 @@ public:
 
 	static Numeric::Number ei(const double x)
 	{
-		return Numeric::Number(std::cos(x), std::sin(x));
+		return Numeric::Number(std::cos(x), -std::sin(x));
 	}
 
 private:
 	Base::Data OperationDefinition(std::vector<const IOutput*> aData) override
 	{
-		constexpr double two_PI = 6.283185307179586476925286766559;
+		double two_PI = 6.283185307179586;
 		using Base::Data;
 		using Numeric::Number;
 
 		assert(aData.size() == 1);
 
 		const Data& data = aData[0]->GetOutput();
-		Number averageValue = 0.0;
-
-		//Zrobimy to dla jednej osi danych bo mi się nie chce. Jeśli ktoś poda więcej to wywali.
 		assert(data.Size() == 2);
 
 		uint32_t dataSize = data[1].Size();
@@ -38,13 +35,12 @@ private:
 			uint32_t n = 0;
 			for (const auto& value : data[1])
 			{
-				result += value * ei( -(two_PI * m * n) / dataSize );
+				// Robimy z tego "value" liczbe zespolona.
+				result += Number(value, 0) * ei( (two_PI * double(m) * double(n)) / double(dataSize) );
 				n++;
 			}
-			result /= dataSize;
 			dftValues.Push(std::move(result));
 		}
-
 
 		Data result{};
 		result.Push(data[0]);

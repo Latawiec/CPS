@@ -7,10 +7,10 @@
 #include <map>
 #include "IOutput.h"
 
-class FFT_DFT : public Base::OperationOwner
+class FFT_DIF : public Base::OperationOwner
 {
 public:
-	FFT_DFT() = default;
+	FFT_DIF() = default;
 
 	static Numeric::Number ei(const double x)
 	{
@@ -24,11 +24,11 @@ private:
 	{
 	public:
 		TwiddleFactors(uint32_t N)
-		: N(N)
+			: N(N)
 		{
 			constexpr double two_PI = 6.283185307179586476925286766559;
 			_values.reserve(N);
-			for(uint32_t i = 0; i < N; ++i)
+			for (uint32_t i = 0; i < N; ++i)
 			{
 				_values.push_back(ei((two_PI * i) / N));
 			}
@@ -36,7 +36,7 @@ private:
 
 		const Numeric::Number& Get(uint32_t k, uint32_t n)
 		{
-			assert(n < N);
+			assert(n <= N && n > 1);
 			while (n != N)
 			{
 				k *= 2;
@@ -69,17 +69,37 @@ private:
 		assert(std::bitset<sizeof(decltype(dataSize)) * 8>(dataSize).count() == 1);
 		uint32_t numberOfStages = [=]()mutable->uint32_t {
 			uint32_t num = 0;
-			while (dataSize = dataSize >> 1){
+			while (dataSize = dataSize >> 1) {
 				++num;
 			}
 			return num;
 		}();
 
 		// Taktyczna kopia
-		Base::Array fftValues(data[1].Size());
-		for (const auto& value : data[1])
+		Base::Array fftValues = data[1];
+
+		// Taktyczny kontener
+		TwiddleFactors twFactors(dataSize);
+
+		// Właście FFT
+		for (uint32_t stage = 0; stage < numberOfStages; ++stage)
 		{
-			fftValues.Push(Number(value, 0));
+			uint32_t samplesInGroup = dataSize / (1 << stage);
+			uint32_t groupsInStage = dataSize / samplesInGroup;
+
+			for (uint32_t group = 0; group < groupsInStage; ++group)
+			{
+				for (uint32_t sample = 0; sample < samplesInGroup / 2; ++sample)
+				{
+					uint32_t sampleIndex = samplesInGroup * group + sample;
+
+
+					fftValues[sampleIndex] = fftValues[sampleIndex] + fftValues[sampleIndex + 1];
+					fftValues[sampleIndex + 1] = fftValues[sampleIndex] - fftValues[sampleIndex + 1];
+
+					fftValues[sampleIndex + 1] *= twFactors.Get(sample, samplesInGroup);
+				}
+			}
 		}
 
 		// Taktyczna zamiana kolejności aby była adekwatna do FFT
@@ -94,29 +114,6 @@ private:
 				original = original >> 1;
 			}
 			std::swap(fftValues[i], fftValues[flipped]);
-		}
-
-		// Taktyczny kontener
-		TwiddleFactors twFactors(dataSize);
-
-		// Właście FFT
-		for (uint32_t stage = 0; stage < numberOfStages; ++stage)
-		{
-			uint32_t groupsInStage = 1 << (stage+1);
-			uint32_t samplesInGroup = dataSize / groupsInStage;
-
-			for (uint32_t group = 0; group < groupsInStage; ++group)
-			{
-				for (uint32_t sample = 0; sample < samplesInGroup / 2; ++sample)
-				{
-					uint32_t sampleIndex = samplesInGroup * group + sample;
-
-					fftValues[sampleIndex + 1] *= twFactors.Get(sample, samplesInGroup);
-
-					fftValues[sampleIndex]	 = fftValues[sampleIndex] + fftValues[sampleIndex + 1];
-					fftValues[sampleIndex+1] = fftValues[sampleIndex] - fftValues[sampleIndex + 1];
-				}
-			}
 		}
 
 		Data result{};
