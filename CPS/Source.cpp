@@ -52,6 +52,9 @@
 #include "IDFT.h"
 #include "FFT_DIT.h"
 #include "FFT_DIF.h"
+#include "DCTII.h"
+#include "IDCTII.h"
+#include "FDCTII.h"
 
 using namespace std;
 using namespace Numeric;
@@ -270,6 +273,28 @@ int main()
 
 			ToFile out("idft_fft_dit");
 			out.AddInput(idft).Execute();
+		}
+
+		DCTII		dct;
+		dct.AddInput(sygnal).Execute();
+		{
+			ToFile out("dct");
+			out.AddInput(dct).Execute();
+		}
+
+		{
+			DCTII	idct;
+			idct.AddInput(dct).Execute();
+
+			ToFile out("idct");
+			out.AddInput(idct).Execute();
+		}
+
+		FDCTII		fdct;
+		fdct.AddInput(sygnal).Execute();
+		{
+			ToFile out("fdct");
+			out.AddInput(fdct).Execute();
 		}
 
 	}

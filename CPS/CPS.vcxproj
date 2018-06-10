@@ -121,11 +121,14 @@
     <ClInclude Include="Containers.h" />
     <ClInclude Include="Convolution.h" />
     <ClInclude Include="Correlation.h" />
+    <ClInclude Include="DCTII.h" />
     <ClInclude Include="DFT.h" />
     <ClInclude Include="Divide.h" />
+    <ClInclude Include="FDCTII.h" />
     <ClInclude Include="FFT_DIF.h" />
     <ClInclude Include="FFT_DIT.h" />
     <ClInclude Include="Filter.h" />
+    <ClInclude Include="IDCTII.h" />
     <ClInclude Include="IDFT.h" />
     <ClInclude Include="InputParser.h" />
     <ClInclude Include="MD.h" />

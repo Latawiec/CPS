@@ -204,6 +204,15 @@
     <ClInclude Include="FFT_DIF.h">
       <Filter>Header Files\Operations</Filter>
     </ClInclude>
+    <ClInclude Include="DCTII.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="IDCTII.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="FDCTII.h">
+      <Filter>Header Files\Operations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
