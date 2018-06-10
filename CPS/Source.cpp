@@ -245,6 +245,7 @@ int main()
 
 
 	{
+		// Discrete Fourier Transform
 		DFT		   dft;
 		dft.AddInput(sygnal).Execute();
 		{
@@ -252,6 +253,7 @@ int main()
 			out.AddInput(dft).Execute();
 		}
 		
+		// Inverse Discrete Fourier Transform (dla DFT)
 		{
 			IDFT		idft;
 			idft.AddInput(dft).Execute();
@@ -260,6 +262,7 @@ int main()
 			out.AddInput(idft).Execute();
 		}
 
+		// Fast Fourier Transform (Decimation in Time)
 		FFT_DIT		fft_dit;
 		fft_dit.AddInput(sygnal).Execute();
 		{
@@ -267,6 +270,7 @@ int main()
 			out.AddInput(fft_dit).Execute();
 		}
 
+		// Inverse Decimal Fourier Transform (dla FFT DIT)
 		{
 			IDFT		idft;
 			idft.AddInput(fft_dit).Execute();
@@ -275,6 +279,7 @@ int main()
 			out.AddInput(idft).Execute();
 		}
 
+		// Discrete Cosine Transform
 		DCTII		dct;
 		dct.AddInput(sygnal).Execute();
 		{
@@ -282,19 +287,30 @@ int main()
 			out.AddInput(dct).Execute();
 		}
 
+		// Inverse Discrete Cosine Transform (dla DCT)
 		{
-			DCTII	idct;
+			IDCTII	idct;
 			idct.AddInput(dct).Execute();
 
 			ToFile out("idct");
 			out.AddInput(idct).Execute();
 		}
 
+		// Fast Discrete Cosine Transform
 		FDCTII		fdct;
 		fdct.AddInput(sygnal).Execute();
 		{
 			ToFile out("fdct");
 			out.AddInput(fdct).Execute();
+		}
+
+		// Inverse Discrete Cosine Transform (dla FDCT)
+		{
+			IDCTII	idct;
+			idct.AddInput(fdct).Execute();
+
+			ToFile out("idct");
+			out.AddInput(idct).Execute();
 		}
 
 	}
