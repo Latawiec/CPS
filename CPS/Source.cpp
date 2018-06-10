@@ -60,6 +60,25 @@ using namespace std;
 using namespace Numeric;
 
 
+class TimeMeasure
+{
+public:
+	TimeMeasure(std::string aName)
+	: _name(aName)
+	{
+		start = std::chrono::system_clock::now();
+	}
+
+	~TimeMeasure()
+	{
+		auto end = std::chrono::system_clock::now();
+		std::cout << _name << " trwało: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " milisekund.\n";
+	}
+private:
+	std::string _name;
+	std::chrono::time_point<std::chrono::system_clock> start;
+};
+
 int main()
 {
 	//ToFile			fileOP{};
@@ -230,7 +249,7 @@ int main()
 	Sum sygnal{};
 	{
 		constexpr double PI = 3.141592653589793238;
-		Sampler sampler(0, 0.015625, 3.99999999);
+		Sampler sampler(0, 0.0625, 15.9999);
 		Sin		sin1(sampler, 2.0, 2.0, PI/2.0);
 		Sin     sin2(sampler, 0.5, 5.0, PI/2.0);
 
@@ -247,7 +266,10 @@ int main()
 	{
 		// Discrete Fourier Transform
 		DFT		   dft;
-		dft.AddInput(sygnal).Execute();
+		{
+			TimeMeasure dummy("dft");
+			dft.AddInput(sygnal).Execute();
+		}
 		{
 			ToFile out("dft");
 			out.AddInput(dft).Execute();
@@ -256,7 +278,10 @@ int main()
 		// Inverse Discrete Fourier Transform (dla DFT)
 		{
 			IDFT		idft;
-			idft.AddInput(dft).Execute();
+			{
+				TimeMeasure dummy("idft");
+				idft.AddInput(dft).Execute();
+			}
 
 			ToFile out("idft_DFT");
 			out.AddInput(idft).Execute();
@@ -264,7 +289,10 @@ int main()
 
 		// Fast Fourier Transform (Decimation in Time)
 		FFT_DIT		fft_dit;
-		fft_dit.AddInput(sygnal).Execute();
+		{
+			TimeMeasure dummy("FFT DIT");
+			fft_dit.AddInput(sygnal).Execute();
+		}
 		{
 			ToFile out("fft_dit");
 			out.AddInput(fft_dit).Execute();
@@ -281,7 +309,10 @@ int main()
 
 		// Discrete Cosine Transform
 		DCTII		dct;
-		dct.AddInput(sygnal).Execute();
+		{
+			TimeMeasure dummy("DCT");
+			dct.AddInput(sygnal).Execute();
+		}
 		{
 			ToFile out("dct");
 			out.AddInput(dct).Execute();
@@ -290,15 +321,24 @@ int main()
 		// Inverse Discrete Cosine Transform (dla DCT)
 		{
 			IDCTII	idct;
-			idct.AddInput(dct).Execute();
+			{
+				TimeMeasure dummy("IDCT");
+				idct.AddInput(dct).Execute();
+			}
 
 			ToFile out("idct");
-			out.AddInput(idct).Execute();
+			{
+				TimeMeasure dummy("IDCT");
+				out.AddInput(idct).Execute();
+			}
 		}
 
 		// Fast Discrete Cosine Transform
 		FDCTII		fdct;
-		fdct.AddInput(sygnal).Execute();
+		{
+			TimeMeasure dummy("FDCT");
+			fdct.AddInput(sygnal).Execute();
+		}
 		{
 			ToFile out("fdct");
 			out.AddInput(fdct).Execute();
